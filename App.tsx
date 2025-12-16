@@ -121,7 +121,7 @@ const App: React.FC = () => {
              </div>
           </div>
           <div className="text-center mt-12 pt-8 border-t border-slate-800 text-xs">
-            &copy; {new Date().getFullYear()} SalaatWijzer. Alle rechten voorbehouden.
+            &copy; 2025 SalaatWijzer. Alle rechten voorbehouden.
           </div>
         </footer>
       </div>

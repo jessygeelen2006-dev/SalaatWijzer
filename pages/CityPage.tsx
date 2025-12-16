@@ -31,6 +31,27 @@ export const CityPage: React.FC = () => {
     return <Navigate to="/" replace />;
   }
 
+  // Calculate formatted date from API data to ensure accuracy
+  const getFormattedDate = () => {
+    if (!data) return undefined;
+    try {
+      // API format is typically DD-MM-YYYY in gregorian.date
+      const [day, month, year] = data.date.gregorian.date.split('-');
+      const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
+      return dateObj.toLocaleDateString('nl-NL', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch (e) {
+      // Fallback if parsing fails
+      return data.date.readable;
+    }
+  };
+
+  const displayDate = getFormattedDate();
+
   // Schema.org Structured Data
   const jsonLd = {
     "@context": "https://schema.org",
@@ -107,10 +128,14 @@ export const CityPage: React.FC = () => {
               Gebedstijden {city.name}
             </h1>
             <p className="text-slate-600 mb-8 text-lg">
-               Actuele islamitische gebedstijden voor vandaag, {data.date.readable}.
+               Actuele islamitische gebedstijden voor vandaag, <span className="capitalize">{displayDate}</span>.
             </p>
 
-            <PrayerTable timings={data.timings} city={city.name} />
+            <PrayerTable 
+              timings={data.timings} 
+              city={city.name} 
+              dateFormatted={displayDate}
+            />
 
             {/* PRODUCT PLACEMENT: High intent location */}
             <div className="mb-12">

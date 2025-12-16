@@ -1,15 +1,136 @@
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, Navigate, useParams } from '../constants';
 import { getDuaBySlug, getRelatedDuas } from '../duaData';
 import { MetaHead } from '../components/MetaHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ProductCTA } from '../components/ProductCTA';
+import { GoogleGenAI } from "@google/genai";
+
+// --- Audio Helper Functions for Gemini TTS ---
+function decode(base64: string) {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
+async function decodeAudioData(
+  data: Uint8Array,
+  ctx: AudioContext,
+  sampleRate: number,
+  numChannels: number,
+): Promise<AudioBuffer> {
+  const dataInt16 = new Int16Array(data.buffer);
+  const frameCount = dataInt16.length / numChannels;
+  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+
+  for (let channel = 0; channel < numChannels; channel++) {
+    const channelData = buffer.getChannelData(channel);
+    for (let i = 0; i < frameCount; i++) {
+      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+    }
+  }
+  return buffer;
+}
 
 export const DuaPage: React.FC = () => {
   const { duaSlug } = useParams<{ duaSlug: string }>();
   const dua = getDuaBySlug(duaSlug || '');
   
+  // Audio State
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoadingAudio, setIsLoadingAudio] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
+
+  useEffect(() => {
+    // Cleanup audio context on unmount
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, []);
+
+  const handlePlayAudio = async () => {
+    if (isPlaying) {
+      // Stop logic
+      if (sourceNodeRef.current) {
+        sourceNodeRef.current.stop();
+      }
+      setIsPlaying(false);
+      return;
+    }
+
+    if (!dua) return;
+
+    setIsLoadingAudio(true);
+
+    try {
+      // Initialize AudioContext on user gesture
+      if (!audioContextRef.current || audioContextRef.current.state === 'closed') {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+      } else if (audioContextRef.current.state === 'suspended') {
+        await audioContextRef.current.resume();
+      }
+
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      
+      // Use the Arabic text for TTS
+      // We instruct the model to recite clearly.
+      const promptText = dua.arabic;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash-preview-tts",
+        contents: [{ parts: [{ text: promptText }] }],
+        config: {
+          responseModalities: ['AUDIO'], // Use string 'AUDIO' to avoid enum import issues in some envs
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: 'Kore' },
+            },
+          },
+        },
+      });
+
+      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+
+      if (base64Audio && audioContextRef.current) {
+        const audioBytes = decode(base64Audio);
+        const audioBuffer = await decodeAudioData(
+          audioBytes,
+          audioContextRef.current,
+          24000,
+          1
+        );
+
+        const source = audioContextRef.current.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContextRef.current.destination);
+        
+        source.onended = () => {
+          setIsPlaying(false);
+        };
+
+        source.start();
+        sourceNodeRef.current = source;
+        setIsPlaying(true);
+      } else {
+        console.error("No audio data received from API");
+      }
+
+    } catch (error) {
+      console.error("Error generating or playing audio:", error);
+      alert("Het lukte niet om de audio af te spelen. Probeer het later opnieuw.");
+    } finally {
+      setIsLoadingAudio(false);
+    }
+  };
+
   if (!dua) {
     return <Navigate to="/dua" replace />;
   }
@@ -27,14 +148,7 @@ export const DuaPage: React.FC = () => {
       "about": {
           "@type": "Thing",
           "name": "Islamitische Smeekbede"
-      },
-      ...(dua.audio && {
-        "audio": {
-            "@type": "AudioObject",
-            "contentUrl": `https://salaatwijzer.nl${dua.audio}`,
-            "description": `Audio recitatie van ${dua.title}`
-        }
-      })
+      }
   };
 
   return (
@@ -80,14 +194,42 @@ export const DuaPage: React.FC = () => {
                             </p>
                         </div>
                         
-                        {dua.audio && (
-                            <div className="mt-6 flex justify-center">
-                                <audio controls className="w-full max-w-md rounded-full shadow-sm bg-emerald-50">
-                                    <source src={dua.audio} type="audio/mpeg" />
-                                    Uw browser ondersteunt het audio-element niet.
-                                </audio>
-                            </div>
-                        )}
+                        {/* Audio Player Button */}
+                        <div className="mt-8 flex justify-center">
+                            <button 
+                                onClick={handlePlayAudio}
+                                disabled={isLoadingAudio}
+                                className={`
+                                    flex items-center gap-3 px-6 py-3 rounded-full font-bold transition-all shadow-sm
+                                    ${isPlaying 
+                                        ? 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100' 
+                                        : 'bg-emerald-600 text-white hover:bg-emerald-700 border border-transparent'
+                                    }
+                                    ${isLoadingAudio ? 'opacity-75 cursor-not-allowed' : ''}
+                                `}
+                            >
+                                {isLoadingAudio ? (
+                                    <>
+                                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span>Genereren...</span>
+                                    </>
+                                ) : isPlaying ? (
+                                    <>
+                                        <span>⏹️</span>
+                                        <span>Stop Audio</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>🔊</span>
+                                        <span>Beluister Dua (AI)</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-2">Gegenereerd met Gemini 2.5 Flash TTS</p>
                     </div>
                 </div>
                 <div className="p-6 md:p-8 bg-emerald-700 text-white text-center">

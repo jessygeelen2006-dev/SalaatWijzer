@@ -1,12 +1,14 @@
+
 import React from 'react';
 import { PrayerTimings } from '../types';
 
 interface PrayerTableProps {
   timings: PrayerTimings;
   city: string;
+  dateFormatted?: string;
 }
 
-export const PrayerTable: React.FC<PrayerTableProps> = ({ timings, city }) => {
+export const PrayerTable: React.FC<PrayerTableProps> = ({ timings, city, dateFormatted }) => {
   const prayers = [
     { name: 'Fajr', time: timings.Fajr, icon: '🌅' },
     { name: 'Shoroeq', time: timings.Sunrise, icon: '🌤' },
@@ -42,11 +44,12 @@ export const PrayerTable: React.FC<PrayerTableProps> = ({ timings, city }) => {
     <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden mb-8">
       <div className="bg-emerald-600 p-4 text-white">
         <h2 className="text-xl font-bold text-center">Gebedstijden Vandaag</h2>
-        <p className="text-center text-emerald-100 text-sm opacity-90">
-          {new Date().toLocaleDateString('nl-NL', {
+        <p className="text-center text-emerald-100 text-sm opacity-90 capitalize">
+          {dateFormatted || new Date().toLocaleDateString('nl-NL', {
             weekday: 'long',
             day: 'numeric',
             month: 'long',
+            year: 'numeric'
           })}
         </p>
       </div>
