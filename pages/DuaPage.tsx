@@ -5,7 +5,7 @@ import { getDuaBySlug, getRelatedDuas } from '../duaData';
 import { MetaHead } from '../components/MetaHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ProductCTA } from '../components/ProductCTA';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Modality } from "@google/genai";
 
 // --- Audio Helper Functions for Gemini TTS ---
 function decode(base64: string) {
@@ -24,17 +24,20 @@ async function decodeAudioData(
   sampleRate: number,
   numChannels: number,
 ): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
+  // Ensure the buffer is aligned for Int16Array
+  const buffer = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+  const dataInt16 = new Int16Array(buffer);
+  
   const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+  const audioBuffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
   for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
+    const channelData = audioBuffer.getChannelData(channel);
     for (let i = 0; i < frameCount; i++) {
       channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
     }
   }
-  return buffer;
+  return audioBuffer;
 }
 
 export const DuaPage: React.FC = () => {
@@ -78,17 +81,25 @@ export const DuaPage: React.FC = () => {
         await audioContextRef.current.resume();
       }
 
+      // Check if API key is selected (if using in AI Studio environment)
+      // This ensures we have a valid key if process.env.API_KEY is not sufficient/set
+      if ((window as any).aistudio && typeof (window as any).aistudio.hasSelectedApiKey === 'function') {
+         const hasKey = await (window as any).aistudio.hasSelectedApiKey();
+         if (!hasKey && typeof (window as any).aistudio.openSelectKey === 'function') {
+             await (window as any).aistudio.openSelectKey();
+         }
+      }
+
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       // Use the Arabic text for TTS
-      // We instruct the model to recite clearly.
-      const promptText = dua.arabic;
+      const promptText = `Please recite the following Islamic prayer in Arabic clearly: ${dua.arabic}`;
 
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{ parts: [{ text: promptText }] }],
         config: {
-          responseModalities: ['AUDIO'], // Use string 'AUDIO' to avoid enum import issues in some envs
+          responseModalities: [Modality.AUDIO], 
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: { voiceName: 'Kore' },
@@ -120,12 +131,15 @@ export const DuaPage: React.FC = () => {
         sourceNodeRef.current = source;
         setIsPlaying(true);
       } else {
-        console.error("No audio data received from API");
+        console.warn("No audio data found in response:", response);
+        alert("Geen audio ontvangen van de server. Probeer het opnieuw.");
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating or playing audio:", error);
-      alert("Het lukte niet om de audio af te spelen. Probeer het later opnieuw.");
+      // Show more specific error message if possible
+      const msg = error.message || "Onbekende fout";
+      alert(`Het lukte niet om de audio af te spelen. Foutmelding: ${msg}`);
     } finally {
       setIsLoadingAudio(false);
     }
