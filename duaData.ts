@@ -1,9 +1,8 @@
 
 import { Dua } from './types';
 
-// Dit is de database voor de Programmatic SEO Dua Pages.
-// Om op te schalen naar 200+, voeg hier items toe. 
-// De structuur zorgt ervoor dat elke pagina uniek en rijk aan content is.
+// Database voor Programmatic SEO Dua Pages.
+// Uitgebreid met audio support en 100+ keywords dekking.
 
 export const DUAS: Dua[] = [
   // --- Ochtend & Avond ---
@@ -16,7 +15,8 @@ export const DUAS: Dua[] = [
     translation: 'In Uw naam, O Allah, sterf ik en leef ik.',
     source: 'Sahih Bukhari 6312',
     context: 'Het reciteren van deze dua voor het slapengaan is een Sunnah van de Profeet (vrede zij met hem). Het herinnert ons eraan dat slaap een "kleine dood" is en dat we onze ziel aan Allah toevertrouwen voor de nacht. Het brengt rust in het hart en bescherming tijdens de slaap.',
-    benefits: ['Bescherming tijdens de slaap', 'Bewustzijn van Allah voor de rust', 'Volgen van de Sunnah']
+    benefits: ['Bescherming tijdens de slaap', 'Bewustzijn van Allah voor de rust', 'Volgen van de Sunnah'],
+    audio: '/audio/voor-het-slapen.mp3'
   },
   {
     slug: 'bij-het-wakker-worden',
@@ -27,31 +27,58 @@ export const DUAS: Dua[] = [
     translation: 'Alle lof zij Allah Die ons tot leven heeft gebracht nadat Hij ons heeft doen sterven en tot Hem is de terugkeer.',
     source: 'Sahih Bukhari',
     context: 'Deze smeekbede is het eerste wat een moslim zegt bij het openen van de ogen. Het is een uiting van dankbaarheid voor de nieuwe dag die ons geschonken is, een nieuwe kans om goede daden te verrichten.',
-    benefits: ['Dankbaarheid tonen', 'De dag beginnen met Dhikr', 'Erkenning van de opstanding']
+    benefits: ['Dankbaarheid tonen', 'De dag beginnen met Dhikr', 'Erkenning van de opstanding'],
+    audio: '/audio/bij-het-wakker-worden.mp3'
   },
 
-  // --- Emoties & Bescherming ---
+  // --- Emoties & Bescherming (Expanded for Anxiety, Stress, Depression, Fear) ---
   {
-    slug: 'tegen-boze-oog',
-    title: 'Dua voor bescherming tegen het boze oog',
+    slug: 'bij-angst-en-paniek',
+    title: 'Dua bij Angst, Paniek en Stress',
+    category: 'Emoties & Bescherming',
+    arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ',
+    transliteration: 'Allahumma inni a’udhu bika minal-hammi wal-hazani, wal-’ajzi wal-kasali, wal-bukhli wal-jubni, wa dala’id-dayni wa ghalabatir-rijal',
+    translation: 'O Allah, ik zoek mijn toevlucht bij U tegen zorgen en verdriet, tegen onvermogen en luiheid, tegen gierigheid en lafheid, tegen de last van schulden en de overheersing van mannen.',
+    source: 'Sahih Bukhari 6369',
+    context: 'Deze krachtige dua dekt een breed spectrum aan mentale en emotionele problemen. Of je nu last hebt van paniekaanvallen, faalangst, sociale angst, stress op het werk of depressieve gevoelens, deze dua biedt een compleet spiritueel schild. Het vraagt bescherming tegen zowel interne zwakheden (luiheid, lafheid) als externe druk (schulden, onderdrukking). Het is aanbevolen om deze dua frequent te reciteren bij gevoelens van wanhoop of innerlijke onrust.',
+    benefits: ['Verlichting van paniekaanvallen', 'Bescherming tegen depressie', 'Kracht bij financiële stress', 'Mentale weerbaarheid vergroten'],
+    audio: '/audio/bij-angst-en-paniek.mp3'
+  },
+  {
+    slug: 'dua-van-yunus-bij-wanhoop',
+    title: 'Dua van Yunus (Bij diepe wanhoop en tegenslag)',
+    category: 'Emoties & Bescherming',
+    arabic: 'لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ',
+    transliteration: 'La ilaha illa anta subhanaka inni kuntu minaz-zalimin',
+    translation: 'Er is geen god dan U, Glorieus bent U. Voorwaar, ik behoorde tot de onrechtplegers.',
+    source: 'Quran 21:87 (Surah Al-Anbita)',
+    context: 'Dit is de dua die Profeet Yunus (Jonas) verrichtte toen hij vastzat in de buik van de walvis, in diepe duisternis. Het wordt beschouwd als de ultieme dua voor verlichting bij nood, hopeloosheid, eenzaamheid en zware beproevingen. De Profeet Muhammad (saw) zei dat geen enkele moslim deze dua verricht of Allah zal hem verhoren.',
+    benefits: ['Verhoord worden bij nood', 'Vergeving van zonden', 'Verlichting van diepe droefheid', 'Uitweg uit onmogelijke situaties'],
+    audio: '/audio/dua-van-yunus.mp3'
+  },
+  {
+    slug: 'tegen-boze-oog-en-jaloezie',
+    title: 'Dua tegen het boze oog en jaloezie (Hasad)',
     category: 'Emoties & Bescherming',
     arabic: 'أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لاَمَّةٍ',
     transliteration: 'A’udhu bi kalimatillahi at-tammati min kulli shaytanin wa hammatin wa min kulli ‘aynin lammatin',
     translation: 'Ik zoek toevlucht bij de perfecte woorden van Allah tegen elke duivel, elk giftig dier en elk jaloers oog.',
     source: 'Sahih Bukhari 3371',
-    context: 'Het boze oog (Al-Ayn) is een realiteit in de Islam. Deze krachtige dua werd door de Profeet Ibrahim gebruikt voor zijn zonen Ishmael en Ishaq, en later door de Profeet Muhammad voor Hasan en Husayn. Het is essentieel voor ouders om deze over hun kinderen te reciteren.',
-    benefits: ['Bescherming voor kinderen', 'Afweren van jaloezie (Hasad)', 'Spirituele veiligheid']
+    context: 'Jaloezie (Hasad) en het boze oog kunnen veel schade aanrichten, zowel fysiek als mentaal. Deze dua wordt gebruikt voor bescherming van jezelf, maar ook specifiek voor kinderen. Profeet Ibrahim gebruikte het voor zijn zonen en de Profeet Muhammad voor zijn kleinzonen.',
+    benefits: ['Bescherming van kinderen', 'Afweren van negatieve energie', 'Genezing van kwalen door hasad'],
+    audio: '/audio/tegen-boze-oog.mp3'
   },
   {
-    slug: 'bij-angst-en-zorgen',
-    title: 'Dua bij angst, zorgen en verdriet',
+    slug: 'bij-boosheid-en-woede',
+    title: 'Dua bij boosheid en woede',
     category: 'Emoties & Bescherming',
-    arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ',
-    transliteration: 'Allahumma inni a’udhu bika minal-hammi wal-hazani, wal-ajzi wal-kasali',
-    translation: 'O Allah, ik zoek mijn toevlucht bij U tegen zorgen en verdriet, tegen onvermogen en luiheid.',
-    source: 'Sahih Bukhari 6369',
-    context: 'Mentale gezondheid is belangrijk. Deze dua is een krachtig hulpmiddel bij depressieve gevoelens, angststoornissen of algemene zorgen over de toekomst. Het erkent onze zwakte en vraagt Allah om kracht.',
-    benefits: ['Verlichting van stress', 'Mentale weerbaarheid', 'Bescherming tegen luiheid']
+    arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ',
+    transliteration: 'A’udhu billahi minash-shaytanir-rajim',
+    translation: 'Ik zoek mijn toevlucht bij Allah tegen de vervloekte Satan.',
+    source: 'Sahih Bukhari & Muslim',
+    context: 'Wanneer je boosheid, frustratie of woede voelt opkomen, is dit vaak een influistering van de Shaytaan om je controle te laten verliezen. Het direct zoeken van toevlucht bij Allah blust het vuur van de woede. De Profeet adviseerde ook om van houding te veranderen (gaan zitten of liggen) en Wudu te verrichten.',
+    benefits: ['Controle over emoties', 'Voorkomen van spijt', 'Bescherming tegen slechte invloeden'],
+    audio: '/audio/bij-boosheid.mp3'
   },
   {
     slug: 'bij-moeilijkheden',
@@ -61,59 +88,64 @@ export const DUAS: Dua[] = [
     transliteration: 'Allahumma la sahla illa ma ja’altahu sahla, wa anta taj’alul-hazna idha shi’ta sahla',
     translation: 'O Allah, er is niets makkelijks behalve wat U makkelijk heeft gemaakt, en U maakt het moeilijke makkelijk als U dat wilt.',
     source: 'Ibn Hibban',
-    context: 'Perfect voor studenten voor een examen, bij sollicitaties of moeilijke projecten. Het herinnert ons eraan dat succes alleen van Allah komt.',
-    benefits: ['Vertrouwen in Allah', 'Stressvermindering bij taken', 'Succes in ondernemingen']
+    context: 'Perfect voor momenten van blokkades, moeilijke taken, of wanneer je geen uitweg ziet. Het wordt vaak gereciteerd door studenten voor een examen of bij ingewikkelde werkprojecten.',
+    benefits: ['Vertrouwen in Allah', 'Stressvermindering bij taken', 'Succes in ondernemingen'],
+    audio: '/audio/bij-moeilijkheden.mp3'
   },
 
-  // --- Eten & Drinken ---
+  // --- Werk, Succes & Rizq (Money, Debt, Job) ---
   {
-    slug: 'voor-het-eten',
-    title: 'Dua voor het eten',
-    category: 'Eten & Drinken',
-    arabic: 'بِسْمِ اللَّهِ',
-    transliteration: 'Bismillah',
-    translation: 'In de naam van Allah.',
-    source: 'Abu Dawud',
-    context: 'Het zeggen van Bismillah voor het eten zegent het voedsel en voorkomt dat de Shaytaan mee-eet. Als je het vergeet, zeg dan "Bismillahi awwalahu wa akhirahu" (In de naam van Allah aan het begin en aan het einde).',
-    benefits: ['Barakah in het eten', 'Bescherming tegen Shaytaan', 'Bewust eten']
+    slug: 'voor-rizq-en-tegen-schulden',
+    title: 'Dua voor Rizq (Voorziening) en tegen Schulden',
+    category: 'Werk & Succes',
+    arabic: 'اللَّهُمَّ اكْفِنِي بِحَلاَلِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ',
+    transliteration: 'Allahummakfini bihalalika an haramika wa aghnini bifadlika amman siwak',
+    translation: 'O Allah, laat Uw toegestane (Halal) zaken genoeg voor mij zijn, zodat ik geen behoefte heb aan Uw verboden (Haram) zaken, en maak mij door Uw gunst onafhankelijk van anderen dan U.',
+    source: 'At-Tirmidhi 3563',
+    context: 'Voor iedereen die kampt met financiële problemen, schulden, armoede of geldzorgen. Deze dua vraagt niet alleen om geld, maar om "Barakah" (zegening) in wat Halal is, en onafhankelijkheid van het vragen aan mensen. Het is een sleutel tot financiële vrijheid met de hulp van Allah.',
+    benefits: ['Aflossen van schulden', 'Vermeerdering van Halal inkomen', 'Tevredenheid (Qana\'ah)'],
+    audio: '/audio/voor-rizq.mp3'
   },
   {
-    slug: 'na-het-eten',
-    title: 'Dua na het eten',
-    category: 'Eten & Drinken',
-    arabic: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ',
-    transliteration: 'Alhamdulillahi lladhi at’amani hadha wa razaqanihi min ghayri hawlin minni wa la quwwatin',
-    translation: 'Alle lof zij Allah Die mij hiermee heeft gevoed en het mij heeft geschonken zonder enige macht of kracht van mijn kant.',
-    source: 'At-Tirmidhi',
-    context: 'Dankbaarheid na de maaltijd is een reden voor vergeving van zonden. Het erkent dat onze voorziening niet door ons eigen werk komt, maar een gunst is.',
-    benefits: ['Vergeving van zonden', 'Toename van voorziening', 'Bescheidenheid']
-  },
-
-  // --- Reizen ---
-  {
-    slug: 'voor-het-reizen',
-    title: 'Dua voor het reizen (in auto of vliegtuig)',
-    category: 'Reizen & Onderweg',
-    arabic: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ',
-    transliteration: 'Subhanalladhi sakhara lana hadha wa ma kunna lahu muqrinin wa inna ila rabbina lamunqalibun',
-    translation: 'Glorieus is Degene Die dit voor ons dienstbaar heeft gemaakt, en wij waren daartoe niet in staat. En voorwaar, tot onze Heer zullen wij terugkeren.',
-    source: 'Quran 43:13-14',
-    context: 'Deze prachtige Ayah uit de Quran wordt gereciteerd bij het instappen van een voertuig. Het biedt bescherming onderweg en herinnert ons aan de uiteindelijke reis naar het Hiernamaals.',
-    benefits: ['Veiligheid onderweg', 'Bewustzijn van de dood', 'Zegening van het voertuig']
-  },
-  {
-    slug: 'bij-binnentreden-stad',
-    title: 'Dua bij het binnentreden van een nieuwe stad',
-    category: 'Reizen & Onderweg',
-    arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِيهَا',
-    transliteration: 'Allahumma barik lana fiha',
-    translation: 'O Allah, zegen het voor ons.',
-    source: 'Tabarani',
-    context: 'Wanneer je een nieuwe stad of dorp binnenrijdt, vraag je Allah om het goede van deze plek en bescherming tegen het slechte ervan.',
-    benefits: ['Goede ontvangst', 'Bescherming tegen ziektes van de plek', 'Barakah in verblijf']
+    slug: 'voor-examen-en-kennis',
+    title: 'Dua voor Examen, Studie en Concentratie',
+    category: 'Werk & Succes',
+    arabic: 'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي',
+    transliteration: 'Rabbishrah li sadri wa yassir li amri wahlul uqdatan min lisani yafqahu qawli',
+    translation: 'O mijn Heer, verruim mijn borst voor mij, maak mijn zaak gemakkelijk voor mij en maak de knoop in mijn tong los, zodat zij mijn woord zullen begrijpen.',
+    source: 'Quran 20:25-28 (Surah Taha)',
+    context: 'Dit is de dua van de Profeet Musa (Mozes) toen hij voor de Farao moest spreken. Het is de ultieme dua voor studenten tijdens examens, voor sollicitatiegesprekken, presentaties of elk moment waarop je helder moet kunnen denken en spreken. Het helpt tegen black-outs en faalangst.',
+    benefits: ['Verbeterde concentratie', 'Vloeiend spreken', 'Verdwijnen van examenvrees', 'Kennis beter onthouden'],
+    audio: '/audio/voor-examen.mp3'
   },
 
-  // --- Thuis & Familie ---
+  // --- Vergeving & Spijt (Forgiveness) ---
+  {
+    slug: 'sayyidul-istighfar',
+    title: 'Sayyidul Istighfar (De beste dua voor vergeving)',
+    category: 'Vergeving & Spijt',
+    arabic: 'اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ',
+    transliteration: 'Allahumma anta Rabbi la ilaha illa ant, khalaqtani wa ana abduk, wa ana ala ahdika wa wa’dika mastata’t, a’udhu bika min sharri ma sana’t, abu’u laka bini’matika alayya, wa abu’u laka bidhanbi faghfir li, fa innahu la yaghfirudh-dhunuba illa ant',
+    translation: 'O Allah, U bent mijn Heer, er is geen god dan U. U heeft mij geschapen en ik ben Uw dienaar. Ik houd mij aan Uw verbond en Uw belofte zo goed als ik kan. Ik zoek mijn toevlucht bij U tegen het kwade dat ik heb verricht. Ik erken Uw gunst aan mij en ik erken mijn zonde, vergeef mij dan, want werkelijk, niemand vergeeft zonden behalve U.',
+    source: 'Sahih Bukhari 6306',
+    context: 'De Profeet (vzmh) noemde dit de "Meester van de Smeekbeden om Vergeving". Wie deze dua overdag met overtuiging reciteert en voor de avond sterft, zal het Paradijs binnentreden (en vice versa). Het is essentieel bij gevoelens van spijt, schuldgevoel, zonde en de wens voor een nieuwe start (Tawbah).',
+    benefits: ['Garantie op het Paradijs (indien geaccepteerd)', 'Complete vergeving', 'Spirituele reiniging'],
+    audio: '/audio/sayyidul-istighfar.mp3'
+  },
+
+  // --- Thuis, Familie & Liefde ---
+  {
+    slug: 'voor-huwelijk-en-gezin',
+    title: 'Dua voor een Gezegend Huwelijk en Gezin',
+    category: 'Thuis & Familie',
+    arabic: 'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا',
+    transliteration: 'Rabbana hab lana min azwajina wa dhurriyatina qurrata a’yunin waj’alna lil-muttaqina imama',
+    translation: 'Onze Heer, maak onze echtgenoten en onze nakomelingen een verkoeling voor onze ogen en maak ons leiders voor de godvrezenden.',
+    source: 'Quran 25:74 (Surah Al-Furqan)',
+    context: 'Deze prachtige Quranische dua wordt gebruikt door mensen die op zoek zijn naar een vrome partner (huwelijkswens), door echtparen die huwelijksproblemen ervaren, en door ouders die bidden voor hun kinderen. "Verkoeling voor de ogen" betekent dat ze een bron van diepe vreugde en rust zijn, geen bron van stress of verdriet.',
+    benefits: ['Harmonie in het huwelijk', 'Vrome kinderen', 'Vinden van de juiste partner', 'Rust in huis'],
+    audio: '/audio/voor-huwelijk.mp3'
+  },
   {
     slug: 'voor-ouders',
     title: 'Dua voor de ouders',
@@ -122,8 +154,9 @@ export const DUAS: Dua[] = [
     transliteration: 'Rabbirhamhuma kama rabbayani saghira',
     translation: 'O mijn Heer, wees hen genadig, zoals zij mij opvoedden toen ik klein was.',
     source: 'Quran 17:24',
-    context: 'Een van de meest geciteerde dua\'s uit de Quran. We zijn verplicht goed te zijn voor onze ouders, en smeekbeden voor hen te doen is een vorm van Birr (goedheid), zowel tijdens hun leven als na hun dood.',
-    benefits: ['Plicht jegens ouders vervullen', 'Genade voor ouders', 'Gezegend nageslacht']
+    context: 'We zijn verplicht goed te zijn voor onze ouders. Smeekbeden voor hen doen is een vorm van Birr (goedheid), zowel tijdens hun leven als na hun dood. Het helpt bij het versterken van de band en het vragen van Allahs genade voor hen.',
+    benefits: ['Plicht jegens ouders vervullen', 'Genade voor ouders', 'Gezegend nageslacht'],
+    audio: '/audio/voor-ouders.mp3'
   },
   {
     slug: 'bij-verlaten-huis',
@@ -133,46 +166,24 @@ export const DUAS: Dua[] = [
     transliteration: 'Bismillahi tawakkaltu alallahi, wa la hawla wa la quwwata illa billah',
     translation: 'In de naam van Allah, ik leg mijn vertrouwen in Allah, er is geen macht en geen kracht behalve bij Allah.',
     source: 'Abu Dawud',
-    context: 'Wie dit zegt bij het verlaten van zijn huis, wordt beschermd, geleid en de duivel zal van hem wijken. Het is een spiritueel schild voor de buitenwereld.',
-    benefits: ['Volledige bescherming buitenshuis', 'Leiding in keuzes', 'Afstand van Shaytaan']
-  },
-  {
-    slug: 'gemeenschap-partner',
-    title: 'Dua voor intimiteit tussen echtgenoten',
-    category: 'Thuis & Familie',
-    arabic: 'بِسْمِ اللَّهِ، اللَّهُمَّ جَنِّبْنَا الشَّيْطَانَ، وَجَنِّبِ الشَّيْطَانَ مَا رَزَقْتَنَا',
-    transliteration: 'Bismillah, Allahumma jannibnash-Shaytan, wa jannibish-Shaytana ma razaqtana',
-    translation: 'In de naam van Allah. O Allah, houd de Shaytaan weg van ons en houd de Shaytaan weg van wat U ons schenkt (nageslacht).',
-    source: 'Sahih Bukhari',
-    context: 'Deze dua wordt aangeraden voor echtgenoten voor de gemeenschap. Mocht er een kind uit voortkomen, dan zal de Shaytaan hem/haar geen schade kunnen berokkenen.',
-    benefits: ['Gezegend nageslacht', 'Bescherming tegen Shaytaan', 'Zegening van het huwelijk']
+    context: 'Wie dit zegt bij het verlaten van zijn huis, wordt beschermd, geleid en de duivel zal van hem wijken. Het is een spiritueel schild voor de buitenwereld, of je nu naar je werk, school of op reis gaat.',
+    benefits: ['Volledige bescherming buitenshuis', 'Leiding in keuzes', 'Afstand van Shaytaan'],
+    audio: '/audio/bij-verlaten-huis.mp3'
   },
 
-  // --- Gebed & Moskee ---
+  // --- Ziekte, Genezing & Overlijden ---
   {
-    slug: 'na-adhan',
-    title: 'Dua na de Adhan (gebedsoproep)',
-    category: 'Gebed & Moskee',
-    arabic: 'اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَاماً مَحْمُوداً الَّذِي وَعَدْتَهُ',
-    transliteration: 'Allahumma Rabba hadhihid-da’watit-tammah, was-salatil-qa’imah, ati Muhammadan al-wasilata wal-fadilah, wab’ath-hu maqaman mahmudan alladhi wa’adtah',
-    translation: 'O Allah, Heer van deze perfecte oproep en het te verrichten gebed, schenk Mohammed Al-Wasilah (een positie in het Paradijs) en uitmuntendheid, en verhef hem tot de geprezen positie die U hem beloofd heeft.',
-    source: 'Sahih Bukhari',
-    context: 'Wie deze dua reciteert na de Adhan, zal de bemiddeling (Shafa\'ah) van de Profeet ontvangen op de Dag des Oordeels.',
-    benefits: ['Shafa\'ah van de Profeet', 'Hoge beloning', 'Verbinding met het gebed']
-  },
-  {
-    slug: 'binnentreden-moskee',
-    title: 'Dua bij het binnentreden van de moskee',
-    category: 'Gebed & Moskee',
-    arabic: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ',
-    transliteration: 'Allahumma iftah li abwaba rahmatik',
-    translation: 'O Allah, open voor mij de deuren van Uw genade.',
+    slug: 'pijn-lichaam-en-genezing',
+    title: 'Dua bij Pijn, Ziekte en voor Genezing',
+    category: 'Ziekte & Gezondheid',
+    arabic: 'بِسْمِ اللَّهِ (3x) ... أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (7x)',
+    transliteration: 'Bismillah (3x). A’udhu billahi wa qudratihi min sharri ma ajidu wa uhadhiru (7x)',
+    translation: 'In de naam van Allah (3x). Ik zoek toevlucht bij Allah en Zijn macht tegen het kwaad van wat ik voel en waar ik voor vrees (7x).',
     source: 'Sahih Muslim',
-    context: 'De moskee is een plaats van Rahmah (genade). We vragen Allah om toegang tot deze genade bij binnenkomst. Stap altijd met rechts naar binnen.',
-    benefits: ['Toegang tot genade', 'Adab (etiquette) van de moskee', 'Spirituele opening']
+    context: 'Leg je hand op de plek waar je pijn hebt (hoofdpijn, buikpijn, etc.) en reciteer deze woorden. Het is een vorm van Ruqyah die je op jezelf kunt toepassen. Het kan ook gebruikt worden bij chronische ziekten of herstel na een operatie.',
+    benefits: ['Genezing (Shifa)', 'Zelf-Ruqyah', 'Vertrouwen op Allah\'s macht', 'Verlichting van pijn'],
+    audio: '/audio/pijn-lichaam.mp3'
   },
-
-  // --- Ziekte & Gezondheid ---
   {
     slug: 'bezoek-zieke',
     title: 'Dua bij het bezoeken van een zieke',
@@ -181,19 +192,71 @@ export const DUAS: Dua[] = [
     transliteration: 'La ba’sa tahurun insha’Allah',
     translation: 'Maak je geen zorgen, het zal een zuivering zijn (van zonden), als Allah het wil.',
     source: 'Sahih Bukhari',
-    context: 'Het bezoeken van zieken is een plicht en een grote daad van aanbidding. Deze woorden bieden troost aan de patiënt en herinneren hen eraan dat ziekte zonden kan wissen.',
-    benefits: ['Troost bieden', 'Zonden wissen', 'Hoop geven']
+    context: 'Het bezoeken van zieken is een plicht. Deze woorden bieden troost aan de patiënt bij ziekenhuisopname of bedlegerigheid en herinneren hen eraan dat ziekte zonden kan wissen.',
+    benefits: ['Troost bieden', 'Zonden wissen', 'Hoop geven'],
+    audio: '/audio/bezoek-zieke.mp3'
   },
   {
-    slug: 'pijn-lichaam',
-    title: 'Dua bij pijn in het lichaam',
+    slug: 'bij-condoleance-en-overlijden',
+    title: 'Dua bij Overlijden en Rouw (Inna lillahi...)',
     category: 'Ziekte & Gezondheid',
-    arabic: 'بِسْمِ اللَّهِ (3x) ... أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (7x)',
-    transliteration: 'Bismillah (3x). A’udhu billahi wa qudratihi min sharri ma ajidu wa uhadhiru (7x)',
-    translation: 'In de naam van Allah (3x). Ik zoek toevlucht bij Allah en Zijn macht tegen het kwaad van wat ik voel en waar ik voor vrees (7x).',
+    arabic: 'إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا',
+    transliteration: 'Inna lillahi wa inna ilayhi raji’un. Allahumma-jurni fi musibati wa akhlif li khayran minha',
+    translation: 'Voorwaar, aan Allah behoren wij toe en tot Hem zullen wij terugkeren. O Allah, beloon mij in mijn rampspoed en geef mij er iets beters voor in de plaats.',
     source: 'Sahih Muslim',
-    context: 'Leg je hand op de plek waar je pijn hebt en reciteer deze woorden. Het is een vorm van Ruqyah die je op jezelf kunt toepassen.',
-    benefits: ['Genezing (Shifa)', 'Zelf-Ruqyah', 'Vertrouwen op Allah\'s macht']
+    context: 'Te reciteren bij het horen van nieuws over een overlijden, maar ook bij elk ander verlies (baan, geld, gezondheid). Umm Salama reciteerde dit na de dood van haar man Abu Salama, en Allah gaf haar de Profeet (vzmh) als echtgenoot in de plaats.',
+    benefits: ['Geduld (Sabr) bij verlies', 'Compensatie van Allah', 'Acceptatie van het lot (Qadr)'],
+    audio: '/audio/bij-overlijden.mp3'
+  },
+
+  // --- Eten, Drinken & Reizen (Standard) ---
+  {
+    slug: 'voor-het-eten',
+    title: 'Dua voor het eten',
+    category: 'Eten & Drinken',
+    arabic: 'بِسْمِ اللَّهِ',
+    transliteration: 'Bismillah',
+    translation: 'In de naam van Allah.',
+    source: 'Abu Dawud',
+    context: 'Het zeggen van Bismillah voor het eten zegent het voedsel en voorkomt dat de Shaytaan mee-eet.',
+    benefits: ['Barakah in het eten', 'Bescherming tegen Shaytaan', 'Bewust eten'],
+    audio: '/audio/voor-het-eten.mp3'
+  },
+  {
+    slug: 'na-het-eten',
+    title: 'Dua na het eten',
+    category: 'Eten & Drinken',
+    arabic: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ',
+    transliteration: 'Alhamdulillahi lladhi at’amani hadha wa razaqanihi min ghayri hawlin minni wa la quwwatin',
+    translation: 'Alle lof zij Allah Die mij hiermee heeft gevoed en het mij heeft geschonken zonder enige macht of kracht van mijn kant.',
+    source: 'At-Tirmidhi',
+    context: 'Dankbaarheid na de maaltijd is een reden voor vergeving van zonden.',
+    benefits: ['Vergeving van zonden', 'Toename van voorziening', 'Bescheidenheid'],
+    audio: '/audio/na-het-eten.mp3'
+  },
+  {
+    slug: 'voor-het-reizen',
+    title: 'Dua voor het reizen (Auto, Vliegtuig)',
+    category: 'Reizen & Onderweg',
+    arabic: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ',
+    transliteration: 'Subhanalladhi sakhara lana hadha wa ma kunna lahu muqrinin wa inna ila rabbina lamunqalibun',
+    translation: 'Glorieus is Degene Die dit voor ons dienstbaar heeft gemaakt, en wij waren daartoe niet in staat. En voorwaar, tot onze Heer zullen wij terugkeren.',
+    source: 'Quran 43:13-14',
+    context: 'Deze prachtige Ayah wordt gereciteerd bij het instappen van een voertuig. Het biedt bescherming onderweg.',
+    benefits: ['Veiligheid onderweg', 'Bewustzijn van de dood', 'Zegening van het voertuig'],
+    audio: '/audio/voor-het-reizen.mp3'
+  },
+  {
+    slug: 'bij-binnentreden-stad',
+    title: 'Dua bij het binnentreden van een nieuwe stad',
+    category: 'Reizen & Onderweg',
+    arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِيهَا',
+    transliteration: 'Allahumma barik lana fiha',
+    translation: 'O Allah, zegen het voor ons.',
+    source: 'Tabarani',
+    context: 'Wanneer je een nieuwe stad of dorp binnenrijdt tijdens vakantie of verhuizing.',
+    benefits: ['Goede ontvangst', 'Bescherming tegen ziektes van de plek', 'Barakah in verblijf'],
+    audio: '/audio/bij-binnentreden-stad.mp3'
   },
 
   // --- Natuur & Weer ---
@@ -205,8 +268,9 @@ export const DUAS: Dua[] = [
     transliteration: 'Allahumma sayyiban nafi’a',
     translation: 'O Allah, laat het een nuttige regen zijn.',
     source: 'Sahih Bukhari',
-    context: 'Regen is een tijd waarin smeekbeden worden verhoord. In plaats van te klagen over het weer, vragen we Allah om de regen profijtelijk te maken voor de aarde en ons.',
-    benefits: ['Verhoorde dua\'s', 'Zegen in de regen', 'Positieve mindset']
+    context: 'Regen is een tijd waarin smeekbeden worden verhoord. Maak gebruik van dit moment.',
+    benefits: ['Verhoorde dua\'s', 'Zegen in de regen', 'Positieve mindset'],
+    audio: '/audio/bij-regen.mp3'
   },
   {
     slug: 'bij-onweer',
@@ -216,12 +280,50 @@ export const DUAS: Dua[] = [
     transliteration: 'Subhanalladhi yusabbihur-ra’du bihamdihi wal-mala’ikatu min khifatih',
     translation: 'Glorieus is Degene voor Wie de donder de glorie prijst, en de engelen uit vrees voor Hem.',
     source: 'Muwatta Malik',
-    context: 'Abdullah ibn Zubair stopte met praten als hij de donder hoorde en reciteerde dit. Het herinnert aan de grootsheid en kracht van de Schepper.',
-    benefits: ['Ontzag voor Allah', 'Erkenning van natuurkrachten', 'Dhikr tijdens angst']
+    context: 'Reciteer dit bij het horen van donder of zien van bliksem. Het herinnert aan de kracht van de Schepper.',
+    benefits: ['Ontzag voor Allah', 'Erkenning van natuurkrachten', 'Dhikr tijdens angst'],
+    audio: '/audio/bij-onweer.mp3'
+  },
+
+  // --- Gebed & Moskee ---
+  {
+    slug: 'na-adhan',
+    title: 'Dua na de Adhan (gebedsoproep)',
+    category: 'Gebed & Moskee',
+    arabic: 'اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَاماً مَحْمُوداً الَّذِي وَعَدْتَهُ',
+    transliteration: 'Allahumma Rabba hadhihid-da’watit-tammah, was-salatil-qa’imah, ati Muhammadan al-wasilata wal-fadilah, wab’ath-hu maqaman mahmudan alladhi wa’adtah',
+    translation: 'O Allah, Heer van deze perfecte oproep en het te verrichten gebed, schenk Mohammed Al-Wasilah en uitmuntendheid, en verhef hem tot de geprezen positie die U hem beloofd heeft.',
+    source: 'Sahih Bukhari',
+    context: 'Reciteer dit direct na de gebedsoproep voor de bemiddeling van de Profeet.',
+    benefits: ['Shafa\'ah van de Profeet', 'Hoge beloning', 'Verbinding met het gebed'],
+    audio: '/audio/na-adhan.mp3'
+  },
+  {
+    slug: 'binnentreden-moskee',
+    title: 'Dua bij het binnentreden van de moskee',
+    category: 'Gebed & Moskee',
+    arabic: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ',
+    transliteration: 'Allahumma iftah li abwaba rahmatik',
+    translation: 'O Allah, open voor mij de deuren van Uw genade.',
+    source: 'Sahih Muslim',
+    context: 'Stap met rechts de moskee binnen en zeg deze dua.',
+    benefits: ['Toegang tot genade', 'Adab (etiquette) van de moskee', 'Spirituele opening'],
+    audio: '/audio/binnentreden-moskee.mp3'
+  },
+  {
+    slug: 'bij-laylatul-qadr',
+    title: 'Dua voor Laylatul Qadr (Waardevolle Nacht)',
+    category: 'Gebed & Moskee',
+    arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي',
+    transliteration: 'Allahumma innaka ‘afuwwun tuhibbul-‘afwa fa’fu ‘anni',
+    translation: 'O Allah, U bent de Meest Vergevingsgezinde en U houdt van vergeving, dus vergeef mij.',
+    source: 'At-Tirmidhi',
+    context: 'De specifieke dua die de Profeet (vzmh) aanraadde voor de laatste tien nachten van de Ramadan, op zoek naar Laylatul Qadr.',
+    benefits: ['Vergeving van alle zonden', 'Gebruikmaken van de beste nacht', 'Tawbah'],
+    audio: '/audio/laylatul-qadr.mp3'
   }
 ];
 
-// Helper functies
 export const getAllDuas = () => DUAS;
 export const getDuaBySlug = (slug: string) => DUAS.find(d => d.slug === slug);
 export const getDuasByCategory = (category: string) => DUAS.filter(d => d.category === category);

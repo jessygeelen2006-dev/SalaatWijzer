@@ -27,7 +27,14 @@ export const DuaPage: React.FC = () => {
       "about": {
           "@type": "Thing",
           "name": "Islamitische Smeekbede"
-      }
+      },
+      ...(dua.audio && {
+        "audio": {
+            "@type": "AudioObject",
+            "contentUrl": `https://salaatwijzer.nl${dua.audio}`,
+            "description": `Audio recitatie van ${dua.title}`
+        }
+      })
   };
 
   return (
@@ -65,13 +72,22 @@ export const DuaPage: React.FC = () => {
                     <p className="text-3xl md:text-5xl font-serif leading-loose md:leading-relaxed text-slate-800 mb-8" style={{ fontFamily: '"Amiri", "Traditional Arabic", serif' }}>
                         {dua.arabic}
                     </p>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <div>
                             <h3 className="text-xs font-bold text-emerald-600 uppercase mb-1">Uitspraak (Transliteratie)</h3>
                             <p className="text-lg md:text-xl font-medium text-slate-700 italic">
                                 "{dua.transliteration}"
                             </p>
                         </div>
+                        
+                        {dua.audio && (
+                            <div className="mt-6 flex justify-center">
+                                <audio controls className="w-full max-w-md rounded-full shadow-sm bg-emerald-50">
+                                    <source src={dua.audio} type="audio/mpeg" />
+                                    Uw browser ondersteunt het audio-element niet.
+                                </audio>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="p-6 md:p-8 bg-emerald-700 text-white text-center">

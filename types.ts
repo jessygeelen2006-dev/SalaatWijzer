@@ -88,8 +88,9 @@ export interface Dua {
   arabic: string;
   transliteration: string;
   translation: string;
-  category: 'Ochtend & Avond' | 'Thuis & Familie' | 'Reizen & Onderweg' | 'Emoties & Bescherming' | 'Gebed & Moskee' | 'Eten & Drinken' | 'Ziekte & Gezondheid' | 'Natuur & Weer';
+  category: 'Ochtend & Avond' | 'Thuis & Familie' | 'Reizen & Onderweg' | 'Emoties & Bescherming' | 'Gebed & Moskee' | 'Eten & Drinken' | 'Ziekte & Gezondheid' | 'Natuur & Weer' | 'Werk & Succes' | 'Vergeving & Spijt';
   source?: string; // e.g. Sahih Bukhari
   context: string; // Uitgebreide tekst voor pSEO body
   benefits?: string[]; // Bullets voor "Deugden"
+  audio?: string; // Path to mp3 file (e.g., /audio/dua-slug.mp3)
 }
