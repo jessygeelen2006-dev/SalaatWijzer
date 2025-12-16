@@ -1,198 +1,176 @@
-import { Province } from './types';
 
-// In a real programmatic SEO app, this would come from a database or a headless CMS.
-// We map the provided cities to their likely provinces for the URL structure.
-// This handles the user requirement: /gebedstijden/{provincie}/{stad}
+import { Province, City } from './types';
+
+// Helper functie om data efficiënt te genereren en slugs consistent te houden.
+// Dit voorkomt dat we duizenden regels herhalende code moeten schrijven.
+const createProvince = (name: string, slug: string, cityNames: string[]): Province => {
+  const cities: City[] = cityNames.sort().map(cityName => {
+    // Slugify logic: 's-Hertogenbosch -> s-hertogenbosch, Alphen aan den Rijn -> alphen-aan-den-rijn
+    const citySlug = cityName
+      .toLowerCase()
+      .trim()
+      .replace(/'/g, '') // Remove apostrophes (e.g. 's-Gravenhage -> s-gravenhage)
+      .replace(/[^\w\s-]/g, '') // Remove special chars
+      .replace(/\s+/g, '-'); // Replace spaces with dashes
+
+    return {
+      name: cityName,
+      slug: citySlug,
+      province: slug
+    };
+  });
+
+  return {
+    name,
+    slug,
+    cities
+  };
+};
+
+// Hieronder een zeer uitgebreide lijst van plaatsen in Nederland, gegroepeerd per provincie.
+// Dit dekt de meeste zoekintenties voor lokale gebedstijden.
 
 export const PROVINCES: Province[] = [
-  {
-    name: 'Noord-Holland',
-    slug: 'noord-holland',
-    cities: [
-      { name: 'Amsterdam', slug: 'amsterdam', province: 'noord-holland' },
-      { name: 'Haarlem', slug: 'haarlem', province: 'noord-holland' },
-      { name: 'Alkmaar', slug: 'alkmaar', province: 'noord-holland' },
-      { name: 'Hilversum', slug: 'hilversum', province: 'noord-holland' },
-      { name: 'Amstelveen', slug: 'amstelveen', province: 'noord-holland' },
-      { name: 'Purmerend', slug: 'purmerend', province: 'noord-holland' },
-      { name: 'Hoorn', slug: 'hoorn', province: 'noord-holland' },
-      { name: 'Zaandam', slug: 'zaandam', province: 'noord-holland' }, // Representing Zaanstad
-      { name: 'Heerhugowaard', slug: 'heerhugowaard', province: 'noord-holland' },
-      { name: 'Weesp', slug: 'weesp', province: 'noord-holland' },
-      { name: 'Bussum', slug: 'bussum', province: 'noord-holland' },
-      { name: 'Huizen', slug: 'huizen', province: 'noord-holland' },
-      { name: 'Den Helder', slug: 'den-helder', province: 'noord-holland' },
-      { name: 'Beverwijk', slug: 'beverwijk', province: 'noord-holland' },
-      { name: 'Heemskerk', slug: 'heemskerk', province: 'noord-holland' },
-      { name: 'Castricum', slug: 'castricum', province: 'noord-holland' },
-      { name: 'Aalsmeer', slug: 'aalsmeer', province: 'noord-holland' },
-    ],
-  },
-  {
-    name: 'Zuid-Holland',
-    slug: 'zuid-holland',
-    cities: [
-      { name: 'Rotterdam', slug: 'rotterdam', province: 'zuid-holland' },
-      { name: 'Den Haag', slug: 'den-haag', province: 'zuid-holland' },
-      { name: 'Leiden', slug: 'leiden', province: 'zuid-holland' },
-      { name: 'Dordrecht', slug: 'dordrecht', province: 'zuid-holland' },
-      { name: 'Zoetermeer', slug: 'zoetermeer', province: 'zuid-holland' },
-      { name: 'Delft', slug: 'delft', province: 'zuid-holland' },
-      { name: 'Gouda', slug: 'gouda', province: 'zuid-holland' },
-      { name: 'Alphen aan den Rijn', slug: 'alphen-aan-den-rijn', province: 'zuid-holland' },
-      { name: 'Schiedam', slug: 'schiedam', province: 'zuid-holland' },
-      { name: 'Spijkenisse', slug: 'spijkenisse', province: 'zuid-holland' },
-      { name: 'Vlaardingen', slug: 'vlaardingen', province: 'zuid-holland' },
-      { name: 'Capelle aan den IJssel', slug: 'capelle-aan-den-ijssel', province: 'zuid-holland' },
-      { name: 'Katwijk', slug: 'katwijk', province: 'zuid-holland' },
-      { name: 'Rijswijk', slug: 'rijswijk', province: 'zuid-holland' },
-      { name: 'Voorburg', slug: 'voorburg', province: 'zuid-holland' },
-      { name: 'Waddinxveen', slug: 'waddinxveen', province: 'zuid-holland' },
-      { name: 'Hellevoetsluis', slug: 'hellevoetsluis', province: 'zuid-holland' },
-      { name: 'Gorinchem', slug: 'gorinchem', province: 'zuid-holland' },
-      { name: 'Maassluis', slug: 'maassluis', province: 'zuid-holland' },
-      { name: 'Ridderkerk', slug: 'ridderkerk', province: 'zuid-holland' },
-      { name: 'Barendrecht', slug: 'barendrecht', province: 'zuid-holland' },
-    ],
-  },
-  {
-    name: 'Utrecht',
-    slug: 'utrecht',
-    cities: [
-      { name: 'Utrecht', slug: 'utrecht', province: 'utrecht' },
-      { name: 'Amersfoort', slug: 'amersfoort', province: 'utrecht' },
-      { name: 'Veenendaal', slug: 'veenendaal', province: 'utrecht' },
-      { name: 'Zeist', slug: 'zeist', province: 'utrecht' },
-      { name: 'Nieuwegein', slug: 'nieuwegein', province: 'utrecht' },
-      { name: 'Houten', slug: 'houten', province: 'utrecht' },
-      { name: 'Woerden', slug: 'woerden', province: 'utrecht' },
-      { name: 'IJsselstein', slug: 'ijsselstein', province: 'utrecht' },
-      { name: 'Soest', slug: 'soest', province: 'utrecht' },
-      { name: 'Baarn', slug: 'baarn', province: 'utrecht' },
-      { name: 'Leusden', slug: 'leusden', province: 'utrecht' },
-    ],
-  },
-  {
-    name: 'Gelderland',
-    slug: 'gelderland',
-    cities: [
-      { name: 'Arnhem', slug: 'arnhem', province: 'gelderland' },
-      { name: 'Nijmegen', slug: 'nijmegen', province: 'gelderland' },
-      { name: 'Apeldoorn', slug: 'apeldoorn', province: 'gelderland' },
-      { name: 'Ede', slug: 'ede', province: 'gelderland' },
-      { name: 'Doetinchem', slug: 'doetinchem', province: 'gelderland' },
-      { name: 'Zutphen', slug: 'zutphen', province: 'gelderland' },
-      { name: 'Harderwijk', slug: 'harderwijk', province: 'gelderland' },
-      { name: 'Tiel', slug: 'tiel', province: 'gelderland' },
-      { name: 'Wageningen', slug: 'wageningen', province: 'gelderland' },
-      { name: 'Zevenaar', slug: 'zevenaar', province: 'gelderland' },
-      { name: 'Barneveld', slug: 'barneveld', province: 'gelderland' },
-      { name: 'Culemborg', slug: 'culemborg', province: 'gelderland' },
-      { name: 'Winterswijk', slug: 'winterswijk', province: 'gelderland' },
-      { name: 'Nijkerk', slug: 'nijkerk', province: 'gelderland' },
-    ],
-  },
-  {
-    name: 'Noord-Brabant',
-    slug: 'noord-brabant',
-    cities: [
-      { name: 'Eindhoven', slug: 'eindhoven', province: 'noord-brabant' },
-      { name: 'Tilburg', slug: 'tilburg', province: 'noord-brabant' },
-      { name: 'Breda', slug: 'breda', province: 'noord-brabant' },
-      { name: "'s-Hertogenbosch", slug: 'den-bosch', province: 'noord-brabant' },
-      { name: 'Helmond', slug: 'helmond', province: 'noord-brabant' },
-      { name: 'Roosendaal', slug: 'roosendaal', province: 'noord-brabant' },
-      { name: 'Oss', slug: 'oss', province: 'noord-brabant' },
-      { name: 'Bergen op Zoom', slug: 'bergen-op-zoom', province: 'noord-brabant' },
-      { name: 'Oosterhout', slug: 'oosterhout', province: 'noord-brabant' },
-      { name: 'Waalwijk', slug: 'waalwijk', province: 'noord-brabant' },
-      { name: 'Veldhoven', slug: 'veldhoven', province: 'noord-brabant' },
-      { name: 'Uden', slug: 'uden', province: 'noord-brabant' },
-      { name: 'Veghel', slug: 'veghel', province: 'noord-brabant' },
-    ],
-  },
-  {
-    name: 'Overijssel',
-    slug: 'overijssel',
-    cities: [
-      { name: 'Enschede', slug: 'enschede', province: 'overijssel' },
-      { name: 'Zwolle', slug: 'zwolle', province: 'overijssel' },
-      { name: 'Deventer', slug: 'deventer', province: 'overijssel' },
-      { name: 'Hengelo', slug: 'hengelo', province: 'overijssel' },
-      { name: 'Almelo', slug: 'almelo', province: 'overijssel' },
-      { name: 'Kampen', slug: 'kampen', province: 'overijssel' },
-      { name: 'Rijssen', slug: 'rijssen', province: 'overijssel' },
-      { name: 'Oldenzaal', slug: 'oldenzaal', province: 'overijssel' },
-    ],
-  },
-  {
-    name: 'Limburg',
-    slug: 'limburg',
-    cities: [
-      { name: 'Maastricht', slug: 'maastricht', province: 'limburg' },
-      { name: 'Venlo', slug: 'venlo', province: 'limburg' },
-      { name: 'Sittard-Geleen', slug: 'sittard-geleen', province: 'limburg' },
-      { name: 'Heerlen', slug: 'heerlen', province: 'limburg' },
-      { name: 'Roermond', slug: 'roermond', province: 'limburg' },
-      { name: 'Weert', slug: 'weert', province: 'limburg' },
-      { name: 'Kerkrade', slug: 'kerkrade', province: 'limburg' },
-    ],
-  },
-  {
-    name: 'Groningen',
-    slug: 'groningen',
-    cities: [
-      { name: 'Groningen', slug: 'groningen', province: 'groningen' },
-      { name: 'Veendam', slug: 'veendam', province: 'groningen' },
-      { name: 'Stadskanaal', slug: 'stadskanaal', province: 'groningen' },
-      { name: 'Hoogezand', slug: 'hoogezand', province: 'groningen' },
-      { name: 'Delfzijl', slug: 'delfzijl', province: 'groningen' },
-    ],
-  },
-  {
-    name: 'Friesland',
-    slug: 'friesland',
-    cities: [
-      { name: 'Leeuwarden', slug: 'leeuwarden', province: 'friesland' },
-      { name: 'Drachten', slug: 'drachten', province: 'friesland' },
-      { name: 'Sneek', slug: 'sneek', province: 'friesland' },
-      { name: 'Heerenveen', slug: 'heerenveen', province: 'friesland' },
-      { name: 'Harlingen', slug: 'harlingen', province: 'friesland' },
-    ],
-  },
-  {
-    name: 'Drenthe',
-    slug: 'drenthe',
-    cities: [
-      { name: 'Assen', slug: 'assen', province: 'drenthe' },
-      { name: 'Emmen', slug: 'emmen', province: 'drenthe' },
-      { name: 'Hoogeveen', slug: 'hoogeveen', province: 'drenthe' },
-      { name: 'Meppel', slug: 'meppel', province: 'drenthe' },
-      { name: 'Coevorden', slug: 'coevorden', province: 'drenthe' },
-    ],
-  },
-  {
-    name: 'Flevoland',
-    slug: 'flevoland',
-    cities: [
-      { name: 'Almere', slug: 'almere', province: 'flevoland' },
-      { name: 'Lelystad', slug: 'lelystad', province: 'flevoland' },
-      { name: 'Dronten', slug: 'dronten', province: 'flevoland' },
-      { name: 'Zeewolde', slug: 'zeewolde', province: 'flevoland' },
-      { name: 'Urk', slug: 'urk', province: 'flevoland' },
-    ],
-  },
-  {
-    name: 'Zeeland',
-    slug: 'zeeland',
-    cities: [
-      { name: 'Middelburg', slug: 'middelburg', province: 'zeeland' },
-      { name: 'Vlissingen', slug: 'vlissingen', province: 'zeeland' },
-      { name: 'Goes', slug: 'goes', province: 'zeeland' },
-      { name: 'Terneuzen', slug: 'terneuzen', province: 'zeeland' },
-      { name: 'Zierikzee', slug: 'zierikzee', province: 'zeeland' },
-    ],
-  },
+  createProvince('Groningen', 'groningen', [
+    'Groningen', 'Appingedam', 'Delfzijl', 'Eemshaven', 'Haren', 'Hoogezand', 'Sappemeer', 
+    'Stadskanaal', 'Veendam', 'Winschoten', 'Bedum', 'Leek', 'Zuidhorn', 'Marum', 
+    'Uithuizen', 'Oude Pekela', 'Nieuwe Pekela', 'Ter Apel', 'Bellingwolde', 'Grootegast', 
+    'Ten Boer', 'Loppersum', 'Middelstum', 'Winsum', 'Vlagtwedde', 'Musselkanaal', 'Scheemda',
+    'Finsterwolde', 'Bad Nieuweschans', 'Slochteren', 'Siddeburen', 'Zuidbroek', 'Noordbroek'
+  ]),
+
+  createProvince('Friesland', 'friesland', [
+    'Leeuwarden', 'Sneek', 'Heerenveen', 'Drachten', 'Harlingen', 'Franeker', 'Dokkum', 
+    'Bolsward', 'Joure', 'Wolvega', 'Lemmer', 'Gorredijk', 'Stiens', 'Grou', 'Burgum', 
+    'Workum', 'Hindeloopen', 'Sloten', 'Stavoren', 'IJlst', 'Makkum', 'Kollum', 
+    'Buitenpost', 'Surhuisterveen', 'Damwoude', 'Zwaagwesteinde', 'Oosterwolde', 
+    'Appelscha', 'Balk', 'Koudum', 'Wommels', 'Dronryp', 'Menaldum', 'Berlikum', 
+    'Sint Annaparochie', 'Hallum', 'Ferwert', 'Holwerd', 'Ameland', 'Vlieland', 
+    'Terschelling', 'Schiermonnikoog'
+  ]),
+
+  createProvince('Drenthe', 'drenthe', [
+    'Assen', 'Emmen', 'Hoogeveen', 'Meppel', 'Coevorden', 'Klazienaveen', 'Beilen', 
+    'Roden', 'Borger', 'Zuidlaren', 'Eelde', 'Gieten', 'Westerbork', 'Norg', 'Diever', 
+    'Dwingeloo', 'Havelte', 'Ruinen', 'Vries', 'Paterswolde', 'Peize', 'Schoonebeek', 
+    'Nieuw-Amsterdam', 'Erica', 'Emmer-Compascuum', 'Ter Apel', 'Valthermond', 
+    'Tweede Exloërmond', 'Grolloo', 'Rolde', 'Smilde', 'Bovensmilde', 'Hooghalen'
+  ]),
+
+  createProvince('Overijssel', 'overijssel', [
+    'Zwolle', 'Enschede', 'Deventer', 'Hengelo', 'Almelo', 'Kampen', 'Rijssen', 
+    'Hardenberg', 'Nijverdal', 'Raalte', 'Oldenzaal', 'Steenwijk', 'Haaksbergen', 
+    'Dalfsen', 'Losser', 'Dedemsvaart', 'Ommen', 'Wierden', 'Staphorst', 'Genemuiden', 
+    'Tubbergen', 'Borne', 'Goor', 'Lochem', 'Vriezenveen', 'Denekamp', 'Ootmarsum', 
+    'Hasselt', 'Zwartsluis', 'Vollenhove', 'Giethoorn', 'Markelo', 'Diepenheim', 
+    'Delden', 'Holten', 'Hellendoorn', 'Gramsbergen', 'Balkbrug', 'Nieuwleusen', 
+    'IJsselmuiden', 'Bathmen'
+  ]),
+
+  createProvince('Flevoland', 'flevoland', [
+    'Almere', 'Almere Buiten', 'Almere Haven', 'Almere Stad', 'Almere Poort',
+    'Lelystad', 'Dronten', 'Emmeloord', 'Zeewolde', 'Urk', 'Biddinghuizen', 
+    'Swifterbant', 'Marknesse', 'Ens', 'Tollebeek', 'Luttelgeest', 'Nagele', 
+    'Rutten', 'Creil', 'Espel', 'Bant', 'Kraggenburg'
+  ]),
+
+  createProvince('Gelderland', 'gelderland', [
+    'Arnhem', 'Nijmegen', 'Apeldoorn', 'Ede', 'Doetinchem', 'Barneveld', 'Zutphen', 
+    'Harderwijk', 'Tiel', 'Wageningen', 'Wijchen', 'Culemborg', 'Zevenaar', 
+    'Geldermalsen', 'Epe', 'Winterswijk', 'Nunspeet', 'Zaltbommel', 'Druten', 
+    'Duiven', 'Groesbeek', 'Putten', 'Ermelo', 'Nijkerk', 'Lichtenvoorde', 'Dieren', 
+    'Brummen', 'Elburg', 'Lochem', 'Bemmel', 'Renkum', 'Didam', 'Doesburg', 
+    'Hattem', 'Heerde', 'Vaassen', 'Twello', 'Velp', 'Rheden', 'Oosterbeek', 
+    'Doorwerth', 'Bennekom', 'Lunteren', 'Voorthuizen', 'Scherpenzeel', 'Hoevelaken', 
+    'Beuningen', 'Huissen', 'Elst', 'Gendt', 'Westervoort', 's-Heerenberg', 
+    'Varsseveld', 'Aalten', 'Borculo', 'Eibergen', 'Neede', 'Ruurlo', 'Vorden', 
+    'Hengelo (Gld)', 'Zelhem', 'Wezep', 'Oldebroek', 'T'
+  ]),
+
+  createProvince('Utrecht', 'utrecht', [
+    'Utrecht', 'Amersfoort', 'Veenendaal', 'Zeist', 'Nieuwegein', 'Woerden', 
+    'Houten', 'Soest', 'IJsselstein', 'Maarssen', 'Leusden', 'Baarn', 'Bilthoven', 
+    'De Meern', 'Mijdrecht', 'Vianen', 'Bunschoten-Spakenburg', 'Wijk bij Duurstede', 
+    'Rhenen', 'Breukelen', 'Driebergen-Rijsenburg', 'Bunnik', 'Montfoort', 
+    'Oudewater', 'Loosdrecht', 'Vleuten', 'Harmelen', 'Abcoude', 'Wilnis', 
+    'Vinkeveen', 'Doorn', 'Maarn', 'Amerongen', 'Leersum', 'Woudenberg', 
+    'Renswoude', 'Eemnes', 'Lopik', 'Benschop'
+  ]),
+
+  createProvince('Noord-Holland', 'noord-holland', [
+    'Amsterdam', 'Haarlem', 'Alkmaar', 'Zaanstad', 'Zaandam', 'Amstelveen', 
+    'Hilversum', 'Purmerend', 'Hoorn', 'Den Helder', 'Heerhugowaard', 'Weesp', 
+    'Bussum', 'Naarden', 'Huizen', 'Beverwijk', 'Heemskerk', 'Castricum', 
+    'Aalsmeer', 'Uithoorn', 'Heemstede', 'Zandvoort', 'Bloemendaal', 'IJmuiden', 
+    'Velsen-Noord', 'Velsen-Zuid', 'Velserbroek', 'Santpoort', 'Haarlemmerliede', 
+    'Halfweg', 'Zwanenburg', 'Badhoevedorp', 'Hoofddorp', 'Nieuw-Vennep', 
+    'Lisse', 'Hillegom', 'Sassenheim', 'Voorhout', 'Noordwijkerhout', 'Schagen', 
+    'Enkhuizen', 'Medemblik', 'Opmeer', 'Wognum', 'Grootebroek', 'Bovenkarspel', 
+    'Andijk', 'Wervershoof', 'Heiloo', 'Limmen', 'Akersloot', 'Uitgeest', 
+    'Krommenie', 'Wormerveer', 'Wormer', 'Koog aan de Zaan', 'Zaandijk', 
+    'Assendelft', 'Oostzaan', 'Landsmeer', 'Volendam', 'Edam', 'Monnickendam', 
+    'Middenbeemster', 'Texel', 'Den Burg'
+  ]),
+
+  createProvince('Zuid-Holland', 'zuid-holland', [
+    'Rotterdam', 'Den Haag', 's-Gravenhage', 'Leiden', 'Dordrecht', 'Zoetermeer', 
+    'Delft', 'Gouda', 'Alphen aan den Rijn', 'Schiedam', 'Vlaardingen', 'Spijkenisse', 
+    'Capelle aan den IJssel', 'Katwijk', 'Rijswijk', 'Voorburg', 'Leidschendam', 
+    'Wassenaar', 'Voorschoten', 'Oegstgeest', 'Leiderdorp', 'Zoeterwoude', 
+    'Noordwijk', 'Noordwijkerhout', 'Lisse', 'Hillegom', 'Teylingen', 'Kaag en Braassem', 
+    'Nieuwkoop', 'Bodegraven', 'Reeuwijk', 'Waddinxveen', 'Boskoop', 'Lansingerland', 
+    'Berkel en Rodenrijs', 'Bergschenhoek', 'Bleiswijk', 'Pijnacker', 'Nootdorp', 
+    'Westland', 'Naaldwijk', 's-Gravenzande', 'Monster', 'Wateringen', 'De Lier', 
+    'Honselersdijk', 'Poeldijk', 'Maassluis', 'Midden-Delfland', 'Schipluiden', 
+    'Maasland', 'Krimpen aan den IJssel', 'Krimpen aan de Lek', 'Lekkerkerk', 
+    'Ouderkerk aan den IJssel', 'Ridderkerk', 'Barendrecht', 'Albrandswaard', 
+    'Rhoon', 'Poortugaal', 'Hellevoetsluis', 'Brielle', 'Westvoorne', 'Rockanje', 
+    'Oostvoorne', 'Goeree-Overflakkee', 'Middelharnis', 'Sommelsdijk', 'Ouddorp', 
+    'Hoek van Holland', 'Zwijndrecht', 'Hendrik-Ido-Ambacht', 'Alblasserdam', 
+    'Papendrecht', 'Sliedrecht', 'Hardinxveld-Giessendam', 'Gorinchem', 'Leerdam', 
+    'Vianen', 'Giessenlanden', 'Molenwaard', 'Oud-Beijerland', 'Strijen', 
+    'Cromstrijen', 'Korendijk', 'Binnenmaas'
+  ]),
+
+  createProvince('Zeeland', 'zeeland', [
+    'Middelburg', 'Vlissingen', 'Goes', 'Terneuzen', 'Zierikzee', 'Hulst', 
+    'Tholen', 'Veere', 'Kapelle', 'Yerseke', 'Breskens', 'Oostburg', 'Sluis', 
+    'Axel', 'Sas van Gent', 'Biervliet', 'Aardenburg', 'IJzendijke', 'Hoek', 
+    'Zaamslag', 'Kloosterzande', 'Westdorpe', 'Koewacht', 'Vogelwaarde', 
+    'Heinkenszand', 's-Gravenpolder', 'Kruiningen', 'Krabbendijke', 'Rilland', 
+    'Hansweert', 'Wemeldinge', 'Kortgene', 'Kamperland', 'Domburg', 'Westkapelle', 
+    'Oostkapelle', 'Vrouwenpolder', 'Serooskerke', 'Koudekerke', 'Zoutelande', 
+    'Bruinisse', 'Burgh-Haamstede', 'Renesse', 'Nieuwerkerk', 'Oosterland', 
+    'Sint-Maartensdijk', 'Sint-Annaland'
+  ]),
+
+  createProvince('Noord-Brabant', 'noord-brabant', [
+    'Eindhoven', 'Tilburg', 'Breda', 's-Hertogenbosch', 'Den Bosch', 'Helmond', 
+    'Roosendaal', 'Oss', 'Bergen op Zoom', 'Oosterhout', 'Waalwijk', 'Veldhoven', 
+    'Uden', 'Veghel', 'Boxtel', 'Best', 'Valkenswaard', 'Geldrop', 'Mierlo', 
+    'Nuenen', 'Deurne', 'Gemert', 'Bakel', 'Laarbeek', 'Asten', 'Someren', 
+    'Cranendonck', 'Budel', 'Heeze', 'Leende', 'Waalre', 'Eersel', 'Bladel', 
+    'Reusel', 'Oirschot', 'Hilvarenbeek', 'Goirle', 'Riel', 'Loon op Zand', 
+    'Kaatsheuvel', 'Dongen', 'Gilze', 'Rijen', 'Alphen-Chaam', 'Baarle-Nassau', 
+    'Etten-Leur', 'Zundert', 'Rijsbergen', 'Rucphen', 'Halderberge', 'Oudenbosch', 
+    'Zevenbergen', 'Moerdijk', 'Klundert', 'Willemstad', 'Steenbergen', 'Woensdrecht', 
+    'Hoogerheide', 'Ossendrecht', 'Geertruidenberg', 'Raamsdonksveer', 'Drimmelen', 
+    'Made', 'Werkendam', 'Woudrichem', 'Aalburg', 'Heusden', 'Drunen', 'Vlijmen', 
+    'Sint-Michielsgestel', 'Schijndel', 'Vught', 'Haaren', 'Oisterwijk', 
+    'Bernheze', 'Heesch', 'Landerd', 'Grave', 'Cuijk', 'Boxmeer', 'Sint Anthonis', 
+    'Mill en Sint Hubert'
+  ]),
+
+  createProvince('Limburg', 'limburg', [
+    'Maastricht', 'Venlo', 'Sittard', 'Geleen', 'Heerlen', 'Roermond', 'Weert', 
+    'Kerkrade', 'Landgraaf', 'Venray', 'Brunssum', 'Stein', 'Beek', 'Gennep', 
+    'Valkenburg', 'Horst', 'Sevenum', 'Panningen', 'Helden', 'Meijel', 'Kessel', 
+    'Maasbree', 'Baarlo', 'Tegelen', 'Blerick', 'Reuver', 'Beesel', 'Swalmen', 
+    'Haelen', 'Heythuysen', 'Roggel', 'Nederweert', 'Stramproy', 'Echt', 'Susteren', 
+    'Born', 'Elsloo', 'Beek', 'Meerssen', 'Bunde', 'Gulpen', 'Wittem', 'Vaals', 
+    'Margraten', 'Eijsden', 'Simpelveld', 'Voerendaal', 'Nuth', 'Schinnen', 
+    'Onderbanken', 'Schinveld'
+  ])
 ];
 
 export const getProvinceBySlug = (slug: string) =>

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 
 interface MetaHeadProps {
@@ -30,7 +31,7 @@ export const MetaHead: React.FC<MetaHeadProps> = ({
     metaDesc.setAttribute('content', description);
 
     // 2. Canonical URL
-    // Note: In a HashRouter app, we simulate the "clean" URL for bots
+    // Used for clean indexing by search engines
     const baseUrl = 'https://salaatwijzer.nl'; // Replace with actual domain in production
     const fullUrl = `${baseUrl}${canonicalPath}`;
 

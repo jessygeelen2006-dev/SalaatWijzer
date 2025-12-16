@@ -23,9 +23,11 @@ export const SitemapGenerator: React.FC = () => {
 
     // Static Pages
     staticPages.forEach((page) => {
+      // Clean URL: No /# prefix
+      const cleanUrl = page.url === '/' ? '/' : page.url;
       xml += `
   <url>
-    <loc>${baseUrl}/#${page.url}</loc>
+    <loc>${baseUrl}${cleanUrl}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
@@ -37,7 +39,7 @@ export const SitemapGenerator: React.FC = () => {
     allDuas.forEach((dua) => {
         xml += `
   <url>
-    <loc>${baseUrl}/#/dua/${dua.slug}</loc>
+    <loc>${baseUrl}/dua/${dua.slug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -48,7 +50,7 @@ export const SitemapGenerator: React.FC = () => {
     PROVINCES.forEach((province) => {
       xml += `
   <url>
-    <loc>${baseUrl}/#/gebedstijden/${province.slug}</loc>
+    <loc>${baseUrl}/gebedstijden/${province.slug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -58,7 +60,7 @@ export const SitemapGenerator: React.FC = () => {
       province.cities.forEach((city) => {
         xml += `
   <url>
-    <loc>${baseUrl}/#/gebedstijden/${province.slug}/${city.slug}</loc>
+    <loc>${baseUrl}/gebedstijden/${province.slug}/${city.slug}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>

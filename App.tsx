@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { ProvincePage } from './pages/ProvincePage';
 import { CityPage } from './pages/CityPage';
@@ -13,8 +13,9 @@ import { DuaPage } from './pages/DuaPage';
  * Technical Architecture Overview:
  * 
  * 1. Routing Strategy:
- *    Using HashRouter for client-side SPA compatibility without server configuration.
+ *    Switched to BrowserRouter (History API) for proper SEO indexation.
  *    Structure: /gebedstijden/:province/:city
+ *    Note: Requires server-side rewrite to index.html on refresh (see _redirects or vercel.json).
  * 
  * 2. Data Flow:
  *    - constants.ts acts as the "Database" mapping cities to provinces.
@@ -33,7 +34,7 @@ import { DuaPage } from './pages/DuaPage';
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <div className="min-h-screen flex flex-col font-sans">
         <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -94,7 +95,7 @@ const App: React.FC = () => {
           </div>
         </footer>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 
