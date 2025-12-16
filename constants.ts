@@ -215,11 +215,7 @@ export const BrowserRouter: React.FC<{ children: React.ReactNode }> = ({ childre
     window.scrollTo(0, 0);
   };
 
-  return (
-    <RouterContext.Provider value={{ path, navigate }}>
-      {children}
-    </RouterContext.Provider>
-  );
+  return React.createElement(RouterContext.Provider, { value: { path, navigate } }, children);
 };
 
 export const Routes: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -239,7 +235,7 @@ export const Routes: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     else regexPath = '^' + regexPath + '$';
 
     if (new RegExp(regexPath).test(path)) {
-      return <>{element}</>;
+      return React.createElement(React.Fragment, null, element);
     }
   }
   return null;
@@ -253,18 +249,14 @@ export const Link: React.FC<{ to: string; className?: string; children: React.Re
   children,
 }) => {
   const { navigate } = useContext(RouterContext);
-  return (
-    <a
-      href={to}
-      className={className}
-      onClick={(e) => {
-        e.preventDefault();
-        navigate(to);
-      }}
-    >
-      {children}
-    </a>
-  );
+  return React.createElement('a', {
+    href: to,
+    className: className,
+    onClick: (e: React.MouseEvent) => {
+      e.preventDefault();
+      navigate(to);
+    }
+  }, children);
 };
 
 export const Navigate: React.FC<{ to: string; replace?: boolean }> = ({ to, replace }) => {

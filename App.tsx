@@ -103,11 +103,12 @@ const App: React.FC = () => {
                     <li><Link to="/dua" className="hover:text-white">Dua Boek & Smeekbeden</Link></li>
                     <li><Link to="/product/gebedsboekje" className="hover:text-white text-emerald-400">Het Dagelijkse Gebedsboekje</Link></li>
                 </ul>
-                <h4 className="text-white font-bold mb-3 mt-6">Snelle Links</h4>
-                <ul className="grid grid-cols-2 gap-2">
+                
+                <h4 className="text-white font-bold mb-3 mt-6">Gebedstijden per Provincie</h4>
+                <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
                     {PROVINCES.map((province) => (
                       <li key={province.slug}>
-                        <Link to={`/gebedstijden/${province.slug}`} className="hover:text-white block truncate">
+                        <Link to={`/gebedstijden/${province.slug}`} className="hover:text-emerald-400 transition-colors block">
                           {province.name}
                         </Link>
                       </li>

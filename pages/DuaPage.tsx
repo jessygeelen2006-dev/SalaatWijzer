@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { getDuaBySlug, getRelatedDuas, Link, Navigate, useParams } from '../constants';
+import { Link, Navigate, useParams } from '../constants';
+import { getDuaBySlug, getRelatedDuas } from '../duaData';
 import { MetaHead } from '../components/MetaHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ProductCTA } from '../components/ProductCTA';
