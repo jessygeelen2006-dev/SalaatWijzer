@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { getCityBySlug, getProvinceBySlug, Link, Navigate, useParams } from '../constants';
 import { fetchPrayerTimes } from '../services/api';
-import { DailyPrayerData } from '../types';
+import { getButchersForCity } from '../services/butcherData';
+import { DailyPrayerData, Butcher } from '../types';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { PrayerTable } from '../components/PrayerTable';
 import { MetaHead } from '../components/MetaHead';
 import { ProductCTA } from '../components/ProductCTA';
+import { ButcherList } from '../components/ButcherList';
 
 export const CityPage: React.FC = () => {
   const { provinceSlug, citySlug } = useParams<{ provinceSlug: string; citySlug: string }>();
@@ -30,6 +32,9 @@ export const CityPage: React.FC = () => {
   if (!province || !city) {
     return <Navigate to="/" replace />;
   }
+
+  // Pass province slug to enable regional fallback for small towns
+  const butchers: Butcher[] = getButchersForCity(city.slug, city.name, province.slug);
 
   // Calculate formatted date from API data to ensure accuracy
   const getFormattedDate = () => {
@@ -94,10 +99,10 @@ export const CityPage: React.FC = () => {
           },
           {
               "@type": "Question",
-              "name": `Hoe laat is Maghrib in ${city.name}?`,
+              "name": `Zijn er Turkse slagers in ${city.name}?`,
               "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": data ? `Het Maghrib gebed in ${city.name} is vandaag om ${data.timings.Maghrib}.` : `Bekijk de tabel voor de exacte tijd.`
+                  "text": `Ja, in ${city.name} en omgeving zijn diverse halal slagers te vinden, zoals ${butchers[0]?.name}. Bekijk het overzicht op deze pagina.`
               }
           }
       ]
@@ -109,8 +114,8 @@ export const CityPage: React.FC = () => {
   return (
     <>
       <MetaHead
-        title={`Gebedstijden ${city.name} - Vandaag & Deze Maand`}
-        description={`Actuele gebedstijden voor ${city.name} (${province.name}). Bekijk hoe laat Fajr, Dhuhr, Asr, Maghrib en Isha vandaag zijn.`}
+        title={`Gebedstijden ${city.name} - Vandaag & Slagers in de Buurt`}
+        description={`Actuele gebedstijden voor ${city.name} (${province.name}). Bekijk hoe laat Fajr, Dhuhr, Asr, Maghrib en Isha vandaag zijn. Inclusief overzicht van Turkse slagers.`}
         canonicalPath={`/gebedstijden/${province.slug}/${city.slug}`}
         jsonLd={combinedSchema}
         ogType="article"
@@ -146,6 +151,11 @@ export const CityPage: React.FC = () => {
             {/* PRODUCT PLACEMENT: High intent location */}
             <div className="mb-12">
                <ProductCTA variant="compact" />
+            </div>
+
+            {/* LOCAL BUSINESS CLUSTER: Turkish Butchers */}
+            <div className="mb-12">
+                <ButcherList butchers={butchers} city={city.name} />
             </div>
 
             {/* Content for SEO and Local Context */}

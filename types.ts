@@ -94,3 +94,12 @@ export interface Dua {
   benefits?: string[]; // Bullets voor "Deugden"
   audio?: string; // Path to mp3 file (e.g., /audio/dua-slug.mp3)
 }
+
+// Nieuwe interface voor Turkse Slagers
+export interface Butcher {
+  name: string;
+  address: string;
+  rating: number; // 1.0 - 5.0
+  reviews: number;
+  specialty: string[];
+}

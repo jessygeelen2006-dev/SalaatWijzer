@@ -12,7 +12,7 @@ export const ProductPage: React.FC = () => {
         description="Download direct Het Dagelijkse Gebedsboekje (PDF). De gids voor meer rust, structuur en focus in je dagelijkse gebeden. Start vandaag nog."
         canonicalPath="/product/gebedsboekje"
         ogType="product"
-        image="https://placehold.co/1200x630/065f46/ffffff?text=Het+Gebedsboekje"
+        image="https://images.unsplash.com/photo-1596568285994-6330ce379b36?auto=format&fit=crop&q=80&w=1200"
       />
       
       <div className="bg-slate-50 min-h-screen font-sans text-slate-900">
@@ -20,21 +20,28 @@ export const ProductPage: React.FC = () => {
         {/* --- HERO SECTION --- */}
         <div className="relative bg-emerald-900 overflow-hidden">
             {/* Background Effects */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
-                <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-emerald-400 blur-3xl"></div>
-                <div className="absolute top-1/2 right-0 w-64 h-64 rounded-full bg-teal-300 blur-3xl"></div>
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+                <img 
+                    src="https://www.transparenttextures.com/patterns/arabesque.png" 
+                    alt="pattern" 
+                    className="w-full h-full object-cover opacity-30 mix-blend-overlay"
+                />
+                <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-emerald-400 blur-3xl opacity-40"></div>
+                <div className="absolute top-1/2 right-0 w-64 h-64 rounded-full bg-teal-300 blur-3xl opacity-30"></div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 pt-12 pb-20 md:pt-20 md:pb-24 relative z-10 text-center md:text-left">
-                <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="max-w-6xl mx-auto px-4 pt-12 pb-20 md:pt-24 md:pb-32 relative z-10 text-center md:text-left">
+                <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
                     <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/50 border border-emerald-700/50 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/50 border border-emerald-700/50 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
                             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             Directe Download (PDF)
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-sm">
                             Meer rust en focus in je <br/>
-                            <span className="text-emerald-300">Dagelijkse Gebeden</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-teal-100">
+                                Dagelijkse Gebeden
+                            </span>
                         </h1>
                         <p className="text-lg md:text-xl text-emerald-100/90 mb-8 leading-relaxed max-w-xl">
                             Ben je op zoek naar meer structuur in je aanbidding? "Het Dagelijkse Gebedsboekje" is jouw digitale gids (45-60 pagina's) om je Salah naar een hoger niveau te tillen.
@@ -43,7 +50,7 @@ export const ProductPage: React.FC = () => {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                             <a 
                                 href={stripeLinkStandard} 
-                                className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-emerald-900 transition-all duration-200 bg-white rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:bg-emerald-50 hover:scale-105 focus:outline-none ring-offset-2 focus:ring-2 ring-emerald-500"
+                                className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-emerald-900 transition-all duration-200 bg-white rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:bg-emerald-50 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] hover:-translate-y-1 focus:outline-none ring-offset-2 focus:ring-2 ring-emerald-500"
                             >
                                 Download Nu – €9,99
                             </a>
@@ -54,17 +61,56 @@ export const ProductPage: React.FC = () => {
                         </p>
                     </div>
                     
-                    {/* Visual: Book Mockup */}
-                    <div className="flex-1 flex justify-center perspective-1000">
-                        <div className="relative w-64 h-80 md:w-72 md:h-96 bg-white shadow-2xl rounded-r-xl rounded-l-sm border-l-4 border-l-emerald-800 flex flex-col items-center text-center p-6 transform rotate-y-12 hover:rotate-y-0 transition-transform duration-700">
-                             <div className="absolute top-4 right-4 text-emerald-100 text-4xl opacity-20">﷽</div>
-                             <div className="mt-auto mb-auto">
-                                 <h3 className="font-serif text-3xl font-bold text-emerald-900 leading-tight">Het Dagelijkse<br/>Gebedsboekje</h3>
-                                 <div className="w-12 h-1 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
+                    {/* Visual: Realistic Book Mockup */}
+                    <div className="flex-1 flex justify-center perspective-[1500px]">
+                        <div className="relative w-64 h-[400px] md:w-80 md:h-[500px] group transition-transform duration-700 hover:rotate-y-[-5deg] rotate-y-[-15deg] rotate-x-[5deg] transform-style-3d">
+                             
+                             {/* Book Cover */}
+                             <div className="absolute inset-0 rounded-r-lg rounded-l-sm shadow-2xl overflow-hidden bg-emerald-900 border-l-4 border-l-emerald-950 flex flex-col items-center justify-between"
+                                  style={{
+                                      backgroundImage: 'url("https://images.unsplash.com/photo-1629738722789-9486c9068b8e?q=80&w=1000&auto=format&fit=crop")',
+                                      backgroundSize: 'cover',
+                                      backgroundPosition: 'center',
+                                      boxShadow: 'inset 4px 0 10px rgba(0,0,0,0.3), 20px 20px 50px rgba(0,0,0,0.5)'
+                                  }}>
+                                 
+                                 {/* Dark Overlay for readability */}
+                                 <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/80 via-emerald-900/40 to-emerald-900/90 mix-blend-multiply"></div>
+                                 <div className="absolute inset-0 bg-black/20"></div>
+
+                                 {/* Content on Cover */}
+                                 <div className="relative z-10 w-full h-full p-8 flex flex-col text-center border-[1px] border-amber-100/20 m-2 rounded-sm outline outline-1 outline-amber-100/20 outline-offset-4">
+                                     <div className="mt-4">
+                                         <p className="text-amber-200/80 text-xs tracking-[0.2em] uppercase font-serif">Al-Yawn Planner</p>
+                                     </div>
+                                     
+                                     <div className="mt-auto mb-auto space-y-4">
+                                         <div className="w-16 h-16 mx-auto bg-amber-100/10 rounded-full flex items-center justify-center backdrop-blur-md border border-amber-100/30">
+                                            <span className="text-2xl">🤲</span>
+                                         </div>
+                                         <h3 className="font-serif text-4xl font-bold text-amber-50 leading-tight drop-shadow-md">
+                                             Het Dagelijkse<br/>
+                                             <span className="text-amber-200">Gebedsboekje</span>
+                                         </h3>
+                                         <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-amber-200 to-transparent mx-auto"></div>
+                                         <p className="text-sm text-emerald-100 font-light">
+                                             Structuur, Verdieping & Khushoo
+                                         </p>
+                                     </div>
+
+                                     <div className="mt-auto">
+                                         <p className="text-[10px] text-amber-200/60 uppercase tracking-widest">Digitale PDF Editie</p>
+                                     </div>
+                                 </div>
                              </div>
-                             <div className="mt-auto w-full bg-slate-50 border-t border-slate-100 pt-4 pb-2">
-                                 <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest">PDF Editie</p>
+
+                             {/* Book Spine (Left side) */}
+                             <div className="absolute top-1 bottom-1 left-0 w-8 bg-gradient-to-r from-emerald-950 to-emerald-800 transform -translate-x-full origin-right rotate-y-[-90deg] rounded-l-sm shadow-inner flex flex-col justify-center items-center">
+                                 <span className="text-amber-100/50 text-xs font-serif tracking-widest rotate-90 whitespace-nowrap">SALAATWIJZER</span>
                              </div>
+
+                             {/* Pages (Right side thickness) */}
+                             <div className="absolute top-2 bottom-2 right-0 w-3 bg-gradient-to-r from-slate-100 to-slate-300 transform translate-x-full origin-left rotate-y-[-90deg] rounded-r-sm shadow-sm border-l border-slate-300"></div>
                         </div>
                     </div>
                 </div>
@@ -124,7 +170,7 @@ export const ProductPage: React.FC = () => {
 
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     {/* Standard Card */}
-                    <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-emerald-500 relative flex flex-col">
+                    <div className="bg-white p-8 rounded-3xl shadow-xl border-2 border-emerald-500 relative flex flex-col transform hover:-translate-y-1 transition-transform duration-300">
                         <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-2xl uppercase tracking-wide">
                             Aanbevolen
                         </div>
@@ -150,7 +196,7 @@ export const ProductPage: React.FC = () => {
                         
                         <a 
                             href={stripeLinkStandard}
-                            className="block w-full py-4 bg-emerald-600 text-white font-bold text-center rounded-xl hover:bg-emerald-700 transition-all shadow-lg hover:shadow-emerald-200 transform hover:-translate-y-1"
+                            className="block w-full py-4 bg-emerald-600 text-white font-bold text-center rounded-xl hover:bg-emerald-700 transition-all shadow-lg hover:shadow-emerald-200"
                         >
                             Koop Standaard
                         </a>

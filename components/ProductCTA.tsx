@@ -10,13 +10,28 @@ export const ProductCTA: React.FC<ProductCTAProps> = ({ variant = 'full' }) => {
   return (
     <div className={`bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-xl overflow-hidden shadow-sm ${variant === 'compact' ? 'p-4' : 'p-6 md:p-8'}`}>
       <div className="flex flex-col md:flex-row items-center gap-6">
-        {/* Fake Book Cover Representation */}
+        {/* Realistic Thumbnail Cover */}
         <div className="shrink-0">
-            <div className={`bg-emerald-800 text-emerald-100 shadow-lg rounded-r-md rounded-l-sm flex flex-col justify-center items-center text-center p-4 ${variant === 'compact' ? 'w-24 h-32 text-xs' : 'w-32 h-44 md:w-40 md:h-56'}`}>
-                <div className="border border-emerald-400/30 w-full h-full p-2 flex flex-col justify-between">
-                    <span className="font-serif tracking-wider uppercase opacity-80 text-[10px]">Al-Yawn</span>
-                    <span className="font-bold font-serif leading-tight">Het Dagelijkse Gebedsboekje</span>
-                    <div className="w-full h-1 bg-emerald-500/50"></div>
+            <div className={`relative bg-emerald-900 rounded-r-md rounded-l-sm shadow-md overflow-hidden ${variant === 'compact' ? 'w-24 h-36' : 'w-32 h-48 md:w-40 md:h-56'}`}>
+                {/* Background Image */}
+                <div 
+                    className="absolute inset-0 opacity-60"
+                    style={{
+                        backgroundImage: 'url("https://images.unsplash.com/photo-1629738722789-9486c9068b8e?q=80&w=400&auto=format&fit=crop")',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                ></div>
+                
+                {/* Overlay & Text */}
+                <div className="relative h-full w-full p-3 flex flex-col items-center justify-between text-center border-l-2 border-emerald-950/30">
+                    <div className="w-full border border-amber-100/20 h-full flex flex-col justify-center p-2 rounded-sm bg-gradient-to-b from-transparent to-black/30">
+                        <span className="font-serif text-[8px] text-amber-100/70 tracking-wider uppercase mb-2">Al-Yawn</span>
+                        <h4 className="font-serif font-bold text-amber-50 leading-tight text-sm drop-shadow-sm">
+                            Het Dagelijkse<br/>Gebedsboekje
+                        </h4>
+                        <div className="w-8 h-[1px] bg-amber-200/50 mx-auto mt-2 mb-1"></div>
+                    </div>
                 </div>
             </div>
         </div>
