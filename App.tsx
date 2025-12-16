@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { PROVINCES } from './constants';
 import { HomePage } from './pages/HomePage';
 import { ProvincePage } from './pages/ProvincePage';
 import { CityPage } from './pages/CityPage';
@@ -42,8 +43,31 @@ const App: React.FC = () => {
                <span className="text-2xl">🧭</span>
                <span className="hidden sm:inline">SalaatWijzer</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
+            <nav className="flex items-center gap-4 text-sm font-medium text-slate-600 h-full">
                 <Link to="/" className="hover:text-emerald-600 hidden sm:block">Home</Link>
+                
+                {/* Internal Linking Dropdown for SEO */}
+                <div className="relative group h-full flex items-center">
+                  <button className="hover:text-emerald-600 flex items-center gap-1 focus:outline-none">
+                    Provincies 
+                    <svg className="w-3 h-3 text-slate-400 group-hover:text-emerald-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  {/* Dropdown Menu */}
+                  <div className="absolute top-full right-0 md:left-1/2 md:-translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 w-56">
+                    <div className="bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden">
+                      {PROVINCES.map((province) => (
+                        <Link 
+                          key={province.slug} 
+                          to={`/gebedstijden/${province.slug}`}
+                          className="block px-4 py-2.5 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors border-b border-slate-50 last:border-0 text-sm"
+                        >
+                          {province.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 <Link to="/dua" className="hover:text-emerald-600">Dua's</Link>
                 <Link to="/product/gebedsboekje" className="text-emerald-700 font-bold hover:text-emerald-800 flex items-center gap-1 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 transition-colors">
                   <span>📖</span>
