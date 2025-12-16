@@ -1,6 +1,6 @@
+
 import React, { useEffect, useState } from 'react';
-import { useParams, Navigate, Link } from 'react-router-dom';
-import { getCityBySlug, getProvinceBySlug } from '../constants';
+import { getCityBySlug, getProvinceBySlug, Link, Navigate, useParams } from '../constants';
 import { fetchPrayerTimes } from '../services/api';
 import { DailyPrayerData } from '../types';
 import { Breadcrumbs } from '../components/Breadcrumbs';

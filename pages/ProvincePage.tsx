@@ -1,6 +1,6 @@
+
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { getProvinceBySlug } from '../constants';
+import { getProvinceBySlug, Link, Navigate, useParams } from '../constants';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { MetaHead } from '../components/MetaHead';
 

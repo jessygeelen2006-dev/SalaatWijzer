@@ -1,6 +1,6 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PROVINCES } from '../constants';
+import { PROVINCES, Link } from '../constants';
 import { MetaHead } from '../components/MetaHead';
 import { ProductCTA } from '../components/ProductCTA';
 

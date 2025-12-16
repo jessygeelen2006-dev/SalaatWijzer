@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from './constants';
 import { PROVINCES } from './constants';
 import { HomePage } from './pages/HomePage';
 import { ProvincePage } from './pages/ProvincePage';
@@ -103,10 +103,15 @@ const App: React.FC = () => {
                     <li><Link to="/dua" className="hover:text-white">Dua Boek & Smeekbeden</Link></li>
                     <li><Link to="/product/gebedsboekje" className="hover:text-white text-emerald-400">Het Dagelijkse Gebedsboekje</Link></li>
                 </ul>
-                <h4 className="text-white font-bold mb-2 mt-4">Snelle Links</h4>
-                <ul className="space-y-2">
-                    <li><Link to="/gebedstijden/utrecht/utrecht" className="hover:text-white">Utrecht</Link></li>
-                    <li><Link to="/gebedstijden/zuid-holland/den-haag" className="hover:text-white">Den Haag</Link></li>
+                <h4 className="text-white font-bold mb-3 mt-6">Snelle Links</h4>
+                <ul className="grid grid-cols-2 gap-2">
+                    {PROVINCES.map((province) => (
+                      <li key={province.slug}>
+                        <Link to={`/gebedstijden/${province.slug}`} className="hover:text-white block truncate">
+                          {province.name}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
              </div>
              <div>

@@ -1,4 +1,5 @@
 
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Province, City } from './types';
 
 // Helper functie om data efficiënt te genereren en slugs consistent te houden.
@@ -182,3 +183,113 @@ export const getCityBySlug = (provinceSlug: string, citySlug: string) => {
 };
 
 export const ALL_CITIES = PROVINCES.flatMap((p) => p.cities);
+
+// --- Custom Router Implementation ---
+// Because react-router-dom is missing in the environment, we implement a lightweight
+// version here to satisfy the app's requirements without adding new files.
+
+const RouterContext = createContext<{
+  path: string;
+  navigate: (path: string, options?: { replace?: boolean }) => void;
+}>({
+  path: typeof window !== 'undefined' ? window.location.pathname : '/',
+  navigate: () => {},
+});
+
+export const BrowserRouter: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [path, setPath] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
+
+  useEffect(() => {
+    const onPopState = () => setPath(window.location.pathname);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  const navigate = (newPath: string, options?: { replace?: boolean }) => {
+    if (options?.replace) {
+      window.history.replaceState({}, '', newPath);
+    } else {
+      window.history.pushState({}, '', newPath);
+    }
+    setPath(newPath);
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <RouterContext.Provider value={{ path, navigate }}>
+      {children}
+    </RouterContext.Provider>
+  );
+};
+
+export const Routes: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { path } = useContext(RouterContext);
+  
+  const routes = React.Children.toArray(children);
+  for (const route of routes) {
+    if (!React.isValidElement(route)) continue;
+    const { path: routePath, element } = route.props as { path: string; element: React.ReactNode };
+
+    // Basic regex matching for routes like /gebedstijden/:provinceSlug
+    let regexPath = routePath
+      .replace(/\*/g, '.*')
+      .replace(/:[A-Za-z0-9_]+/g, '([^/]+)');
+
+    if (regexPath === '/') regexPath = '^/$';
+    else regexPath = '^' + regexPath + '$';
+
+    if (new RegExp(regexPath).test(path)) {
+      return <>{element}</>;
+    }
+  }
+  return null;
+};
+
+export const Route: React.FC<{ path: string; element: React.ReactNode }> = () => null;
+
+export const Link: React.FC<{ to: string; className?: string; children: React.ReactNode }> = ({
+  to,
+  className,
+  children,
+}) => {
+  const { navigate } = useContext(RouterContext);
+  return (
+    <a
+      href={to}
+      className={className}
+      onClick={(e) => {
+        e.preventDefault();
+        navigate(to);
+      }}
+    >
+      {children}
+    </a>
+  );
+};
+
+export const Navigate: React.FC<{ to: string; replace?: boolean }> = ({ to, replace }) => {
+  const { navigate } = useContext(RouterContext);
+  useEffect(() => {
+    navigate(to, { replace });
+  }, [to, replace, navigate]);
+  return null;
+};
+
+export function useParams<T extends Record<string, string>>(): T {
+  const { path } = useContext(RouterContext);
+  const parts = path.split('/').filter(Boolean);
+
+  // Hardcoded matching logic for the known app routes
+  if (path.startsWith('/gebedstijden/')) {
+    if (parts.length === 3) {
+      return { provinceSlug: parts[1], citySlug: parts[2] } as unknown as T;
+    }
+    if (parts.length === 2) {
+      return { provinceSlug: parts[1] } as unknown as T;
+    }
+  }
+  if (path.startsWith('/dua/') && parts.length === 2) {
+    return { duaSlug: parts[1] } as unknown as T;
+  }
+  return {} as T;
+}

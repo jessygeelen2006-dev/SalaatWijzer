@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../constants';
 import { MetaHead } from '../components/MetaHead';
 
 export const ProductPage: React.FC = () => {

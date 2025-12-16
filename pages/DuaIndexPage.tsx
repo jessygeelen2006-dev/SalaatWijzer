@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../constants';
 import { getAllDuas } from '../duaData';
 import { MetaHead } from '../components/MetaHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';

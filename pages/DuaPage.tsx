@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { useParams, Navigate, Link } from 'react-router-dom';
-import { getDuaBySlug, getRelatedDuas } from '../duaData';
+import { getDuaBySlug, getRelatedDuas, Link, Navigate, useParams } from '../constants';
 import { MetaHead } from '../components/MetaHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ProductCTA } from '../components/ProductCTA';
