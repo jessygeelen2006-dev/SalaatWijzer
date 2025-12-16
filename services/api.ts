@@ -1,3 +1,4 @@
+
 import { DailyPrayerData, ApiResponse } from '../types';
 
 // Aladhan API Endpoint
@@ -9,7 +10,14 @@ const API_BASE = 'https://api.aladhan.com/v1/timingsByCity';
  */
 export const fetchPrayerTimes = async (city: string): Promise<DailyPrayerData | null> => {
   try {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    // FIX: Aladhan API requires DD-MM-YYYY format in the path. 
+    // ISO string gives YYYY-MM-DD which causes the API to default to random dates (like 2016).
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const today = `${day}-${month}-${year}`; // DD-MM-YYYY
+
     const country = 'Netherlands';
     const method = 3; // Muslim World League
 

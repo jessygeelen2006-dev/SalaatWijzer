@@ -37,7 +37,12 @@ export const CityPage: React.FC = () => {
     try {
       // API format is typically DD-MM-YYYY in gregorian.date
       const [day, month, year] = data.date.gregorian.date.split('-');
+      
+      // Safety check: ensure we have valid numbers
+      if (!day || !month || !year) throw new Error("Invalid date format");
+
       const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
+      
       return dateObj.toLocaleDateString('nl-NL', {
         weekday: 'long',
         day: 'numeric',
@@ -45,8 +50,9 @@ export const CityPage: React.FC = () => {
         year: 'numeric'
       });
     } catch (e) {
-      // Fallback if parsing fails
-      return data.date.readable;
+      // Fallback: Return undefined so PrayerTable uses `new Date()` (Today)
+      // This prevents showing "16-12-2016" string if API returns weird data.
+      return undefined;
     }
   };
 
@@ -128,7 +134,7 @@ export const CityPage: React.FC = () => {
               Gebedstijden {city.name}
             </h1>
             <p className="text-slate-600 mb-8 text-lg">
-               Actuele islamitische gebedstijden voor vandaag, <span className="capitalize">{displayDate}</span>.
+               Actuele islamitische gebedstijden voor vandaag, <span className="capitalize">{displayDate || new Date().toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})}</span>.
             </p>
 
             <PrayerTable 
